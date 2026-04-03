@@ -1,0 +1,51 @@
+url: https://dai540.github.io/scdown/
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+home:
+  title: scdown
+  description: Simple downstream analysis after cell annotation.
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search]
+  components:
+    intro:
+      text: Get Started
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+        - text: Getting Started
+          href: articles/getting-started.html
+
+reference:
+  - title: Core
+    contents:
+      - scdown
+      - scdown_example
+      - summarize_dataset
+      - collapse_lineage
+      - plot_map
+      - find_markers
+      - plot_gene
+      - plot_composition
+      - check_annotation
+      - plot_signature
+      - plot_heatmap
+      - infer_communication
+      - run_core
+      - build_scdown_report
+  - title: Built-ins
+    contents:
+      - immune_signatures
+      - immune_marker_panels
+      - default_lineage_mapping
+      - list_signatures
+      - get_signature

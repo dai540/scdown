@@ -1,0 +1,45 @@
+Package: scdown
+Type: Package
+Title: Simple Downstream Analysis After Cell Annotation
+Version: 0.1.0
+Authors@R: c(
+    person(
+      given = "Daiki",
+      family = "User",
+      role = c("aut", "cre"),
+      email = "daik54015@gmail.com"
+    )
+  )
+Description: Provides a simple, practical downstream workflow for annotated
+    single-cell RNA-seq data with an emphasis on immune-focused datasets.
+    The package keeps the interface short: build an analysis object, inspect
+    maps, markers, user-selected genes, composition, annotation quality,
+    signatures, communication, and create a compact HTML report.
+URL: https://dai540.github.io/scdown/,
+    https://github.com/dai540/scdown
+BugReports: https://github.com/dai540/scdown/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.2.0)
+Imports:
+    grDevices,
+    graphics,
+    stats,
+    utils
+Suggests:
+    knitr,
+    Matrix,
+    pkgdown,
+    rmarkdown,
+    S4Vectors,
+    SeuratObject,
+    SingleCellExperiment,
+    SummarizedExperiment,
+    testthat (>= 3.0.0),
+    uwot
+Config/testthat/edition: 3
+Config/Needs/website: pkgdown
+VignetteBuilder: knitr
