@@ -11,6 +11,12 @@ It is built around one short idea:
 Internally, `scdown` keeps data in a sparse-first matrix form, so it no longer
 needs to expand everything into a huge long table before analysis.
 
+## Website
+
+- Home: [https://dai540.github.io/scdown/](https://dai540.github.io/scdown/)
+- Getting started: [https://dai540.github.io/scdown/articles/getting-started.html](https://dai540.github.io/scdown/articles/getting-started.html)
+- Reference: [https://dai540.github.io/scdown/reference/index.html](https://dai540.github.io/scdown/reference/index.html)
+
 ## Installation
 
 ```r
