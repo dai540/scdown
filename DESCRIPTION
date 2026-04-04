@@ -1,7 +1,7 @@
 Package: scdown
 Type: Package
 Title: Simple Downstream Analysis After Cell Annotation
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person(
       given = "Daiki",
@@ -16,7 +16,8 @@ Description: Provides a simple, practical downstream workflow for annotated
     exploration from sample-aware testing. Inputs are standardized into a
     sparse-first matrix representation, then reused across maps, markers,
     user-selected genes, composition, annotation quality, signatures,
-    communication, and compact HTML reports.
+    communication, compact HTML reports, and handoff guidance for recommended
+    upstream and rigorous downstream tools.
 URL: https://dai540.github.io/scdown/,
     https://github.com/dai540/scdown
 BugReports: https://github.com/dai540/scdown/issues

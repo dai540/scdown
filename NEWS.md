@@ -1,3 +1,9 @@
+# scdown 0.3.0
+
+- clarified `scdown` as an annotation-after downstream hub rather than a full upstream workflow
+- added a recommended pipeline helper and a handoff vignette for PBMC, tumor immune, and patient comparison use cases
+- updated README and pkgdown site to explain where `scdown` fits and which specialist tools to use before or after it
+
 # scdown 0.2.0
 
 - switched to a sparse-first internal matrix representation

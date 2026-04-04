@@ -6,7 +6,7 @@ template:
 
 home:
   title: scdown
-  description: Simple downstream analysis after cell annotation.
+  description: Annotation-after downstream analysis for single-cell RNA-seq.
 
 navbar:
   structure:
@@ -24,11 +24,14 @@ navbar:
       menu:
         - text: Getting Started
           href: articles/getting-started.html
+        - text: Recommended Pipeline
+          href: articles/recommended-pipeline.html
 
 reference:
   - title: Object
     contents:
       - scdown
+      - recommended_pipeline
       - scdown_example
       - summarize_dataset
       - collapse_lineage

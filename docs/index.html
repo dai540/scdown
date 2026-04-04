@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="scdown">
-<meta name="description" content="Simple downstream analysis after cell annotation.">
-<meta property="og:description" content="Simple downstream analysis after cell annotation.">
+<meta name="description" content="Annotation-after downstream analysis for single-cell RNA-seq.">
+<meta property="og:description" content="Annotation-after downstream analysis for single-cell RNA-seq.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/getting-started.html">Getting Started</a></li>
+    <li><a class="dropdown-item" href="articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul>
 </li>
       </ul>
@@ -55,13 +56,28 @@
 <div class="page-header"><h1 id="scdown">scdown<a class="anchor" aria-label="anchor" href="#scdown"></a>
 </h1></div>
 <p><code>scdown</code> is a simple downstream toolkit for annotated single-cell RNA-seq data.</p>
-<p>It is built around one short idea:</p>
+<p>It is best used <strong>after</strong> QC, normalization, embedding, clustering, and cell annotation. In other words, <code>scdown</code> is a downstream hub, not a full upstream single-cell framework.</p>
+<div class="section level2">
+<h2 id="what-scdown-is-for">What <code>scdown</code> is for<a class="anchor" aria-label="anchor" href="#what-scdown-is-for"></a>
+</h2>
 <ul>
-<li>make one analysis object</li>
+<li>make one downstream analysis object</li>
 <li>run fast exploratory summaries</li>
 <li>run sample-aware tests only when you need them</li>
+<li>export a compact HTML report for review and collaboration</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="what-scdown-is-not-for">What <code>scdown</code> is not for<a class="anchor" aria-label="anchor" href="#what-scdown-is-not-for"></a>
+</h2>
+<ul>
+<li>droplet QC or ambient RNA correction</li>
+<li>normalization, HVG selection, integration, clustering, or trajectory fitting</li>
+<li>publication-grade differential state as a primary specialist method</li>
+</ul>
+<p>Those parts are better handled by upstream or specialist tools such as Seurat, <code>scater</code>, <code>scuttle</code>, <code>scran</code>, <code>SingleR</code>, <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, and CellChat.</p>
 <p>Internally, <code>scdown</code> keeps data in a sparse-first matrix form, so it no longer needs to expand everything into a huge long table before analysis.</p>
+</div>
 <div class="section level2">
 <h2 id="website">Website<a class="anchor" aria-label="anchor" href="#website"></a>
 </h2>
@@ -69,6 +85,8 @@
 <li>Home: <a href="https://dai540.github.io/scdown/">https://dai540.github.io/scdown/</a>
 </li>
 <li>Getting started: <a href="https://dai540.github.io/scdown/articles/getting-started.html">https://dai540.github.io/scdown/articles/getting-started.html</a>
+</li>
+<li>Recommended pipeline: <a href="https://dai540.github.io/scdown/articles/recommended-pipeline.html">https://dai540.github.io/scdown/articles/recommended-pipeline.html</a>
 </li>
 <li>Reference: <a href="https://dai540.github.io/scdown/reference/index.html">https://dai540.github.io/scdown/reference/index.html</a>
 </li>
@@ -113,9 +131,18 @@
 <span><span class="fu"><a href="reference/test_communication.html">test_communication</a></span><span class="op">(</span><span class="va">obj</span>, n_perm <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
+<h2 id="recommended-positioning">Recommended positioning<a class="anchor" aria-label="anchor" href="#recommended-positioning"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"pbmc"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"tumor_immune"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"patient_comparison"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"IL7R"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -137,7 +164,7 @@
 <div class="section level2">
 <h2 id="direct-input">Direct input<a class="anchor" aria-label="anchor" href="#direct-input"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="va">sce</span>,</span>
 <span>  annotation_col <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
@@ -160,6 +187,7 @@
 </h2>
 <ul>
 <li><code><a href="reference/scdown.html">scdown()</a></code></li>
+<li><code><a href="reference/recommended_pipeline.html">recommended_pipeline()</a></code></li>
 <li><code><a href="reference/summarize_dataset.html">summarize_dataset()</a></code></li>
 <li><code><a href="reference/collapse_lineage.html">collapse_lineage()</a></code></li>
 <li><code><a href="reference/plot_map.html">plot_map()</a></code></li>

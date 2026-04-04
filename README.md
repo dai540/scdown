@@ -2,11 +2,26 @@
 
 `scdown` is a simple downstream toolkit for annotated single-cell RNA-seq data.
 
-It is built around one short idea:
+It is best used **after** QC, normalization, embedding, clustering, and cell
+annotation. In other words, `scdown` is a downstream hub, not a full upstream
+single-cell framework.
 
-- make one analysis object
+## What `scdown` is for
+
+- make one downstream analysis object
 - run fast exploratory summaries
 - run sample-aware tests only when you need them
+- export a compact HTML report for review and collaboration
+
+## What `scdown` is not for
+
+- droplet QC or ambient RNA correction
+- normalization, HVG selection, integration, clustering, or trajectory fitting
+- publication-grade differential state as a primary specialist method
+
+Those parts are better handled by upstream or specialist tools such as Seurat,
+`scater`, `scuttle`, `scran`, `SingleR`, `muscat`, `dreamlet`, `miloR`, and
+CellChat.
 
 Internally, `scdown` keeps data in a sparse-first matrix form, so it no longer
 needs to expand everything into a huge long table before analysis.
@@ -15,6 +30,7 @@ needs to expand everything into a huge long table before analysis.
 
 - Home: [https://dai540.github.io/scdown/](https://dai540.github.io/scdown/)
 - Getting started: [https://dai540.github.io/scdown/articles/getting-started.html](https://dai540.github.io/scdown/articles/getting-started.html)
+- Recommended pipeline: [https://dai540.github.io/scdown/articles/recommended-pipeline.html](https://dai540.github.io/scdown/articles/recommended-pipeline.html)
 - Reference: [https://dai540.github.io/scdown/reference/index.html](https://dai540.github.io/scdown/reference/index.html)
 
 ## Installation
@@ -53,6 +69,15 @@ test_markers(obj)
 test_composition(obj)
 test_signature(obj, signatures = c("cytotoxic", "b_cell"))
 test_communication(obj, n_perm = 25)
+```
+
+## Recommended positioning
+
+```r
+recommended_pipeline("generic")
+recommended_pipeline("pbmc")
+recommended_pipeline("tumor_immune")
+recommended_pipeline("patient_comparison")
 ```
 
 ## Custom resources
@@ -101,6 +126,7 @@ obj_seurat <- scdown(
 ## Main functions
 
 - `scdown()`
+- `recommended_pipeline()`
 - `summarize_dataset()`
 - `collapse_lineage()`
 - `plot_map()`

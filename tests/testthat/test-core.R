@@ -32,6 +32,15 @@ test_that("built-ins and custom resources are available", {
   expect_true("CD3D" %in% get_signature("my_state", obj))
 })
 
+test_that("recommended pipeline helper returns expected scenarios", {
+  tbl <- recommended_pipeline("generic")
+  expect_true(all(c("stage", "goal", "recommended_tools", "scdown_role") %in% names(tbl)))
+  expect_true(any(tbl$scdown_role == "core"))
+
+  pbmc <- recommended_pipeline("pbmc")
+  expect_true(any(grepl("scdown", pbmc$recommended_tools, fixed = TRUE)))
+})
+
 test_that("explore functions return expected tables", {
   obj <- collapse_lineage(scdown(scdown_example()))
   expect_true("embedding_cells" %in% names(plot_map(obj)$tables))
