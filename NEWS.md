@@ -1,3 +1,10 @@
+# scdown 0.4.0
+
+- added `scope_table()` to make the intended boundary of `scdown` explicit
+- added `export_for_handoff()` to prepare objects for `muscat`, `dreamlet`, `miloR`, and CellChat workflows
+- expanded `build_scdown_report()` with scope guidance plus marker and communication test sections
+- strengthened README, pkgdown, and the recommended pipeline vignette around exploratory-vs-specialist handoff
+
 # scdown 0.3.0
 
 - clarified `scdown` as an annotation-after downstream hub rather than a full upstream workflow

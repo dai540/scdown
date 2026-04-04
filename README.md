@@ -74,11 +74,27 @@ test_communication(obj, n_perm = 25)
 ## Recommended positioning
 
 ```r
+scope_table("generic")
 recommended_pipeline("generic")
 recommended_pipeline("pbmc")
 recommended_pipeline("tumor_immune")
 recommended_pipeline("patient_comparison")
 ```
+
+## Specialist handoff
+
+If an endpoint becomes central enough for publication-grade modeling, prepare a
+handoff object instead of stretching `scdown` beyond its intended scope.
+
+```r
+muscat_input <- export_for_handoff(obj, target = "muscat")
+dreamlet_input <- export_for_handoff(obj, target = "dreamlet")
+milor_input <- export_for_handoff(obj, target = "miloR")
+cellchat_input <- export_for_handoff(obj, target = "CellChat")
+```
+
+`build_scdown_report()` also includes a scope and handoff section, plus marker
+and communication tests when `run_tests = TRUE`.
 
 ## Custom resources
 
@@ -127,6 +143,8 @@ obj_seurat <- scdown(
 
 - `scdown()`
 - `recommended_pipeline()`
+- `scope_table()`
+- `export_for_handoff()`
 - `summarize_dataset()`
 - `collapse_lineage()`
 - `plot_map()`

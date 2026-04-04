@@ -21,3 +21,8 @@ A list with signature test tables and plot paths.
 \description{
 Test signature differences across groups
 }
+\details{
+This is a compact group comparison over sample-level mean signature scores.
+It is intended for review and prioritization, not as a replacement for more
+flexible specialist modeling.
+}

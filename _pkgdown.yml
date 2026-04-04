@@ -32,6 +32,8 @@ reference:
     contents:
       - scdown
       - recommended_pipeline
+      - scope_table
+      - export_for_handoff
       - scdown_example
       - summarize_dataset
       - collapse_lineage

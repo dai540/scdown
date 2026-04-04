@@ -25,8 +25,45 @@ That means:
 ## Generic positioning
 
 ```{r}
+kable(scope_table("generic"))
 kable(recommended_pipeline("generic"))
 ```
+
+The shortest rule is:
+
+- use `scdown` for review, prioritization, and compact reporting
+- hand off to specialist tools once an endpoint becomes a primary claim
+
+## What stays inside `scdown`
+
+`scdown` is a good home for:
+
+- maps and annotation review
+- quick marker review
+- user-selected genes
+- sample-level composition summaries
+- signature summaries
+- exploratory communication
+- compact HTML reports
+
+## What should hand off
+
+```{r}
+kable(scope_table("patient_comparison"))
+```
+
+When the question becomes formal, export a handoff object:
+
+```{r eval=FALSE}
+obj <- scdown(scdown_example())
+export_for_handoff(obj, target = "muscat")
+export_for_handoff(obj, target = "dreamlet")
+export_for_handoff(obj, target = "miloR")
+export_for_handoff(obj, target = "CellChat")
+```
+
+These exports do not replace the specialist package. They prepare the object you
+would pass into the specialist workflow.
 
 ## PBMC
 

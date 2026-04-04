@@ -39,6 +39,22 @@ test_that("recommended pipeline helper returns expected scenarios", {
 
   pbmc <- recommended_pipeline("pbmc")
   expect_true(any(grepl("scdown", pbmc$recommended_tools, fixed = TRUE)))
+
+  scope <- scope_table("generic")
+  expect_true(all(c("stage", "use_scdown", "specialist_tools", "note") %in% names(scope)))
+  expect_true(any(scope$use_scdown == "handoff"))
+})
+
+test_that("handoff export returns target-ready structures", {
+  obj <- collapse_lineage(scdown(scdown_example()))
+
+  muscat_export <- export_for_handoff(obj, target = "muscat")
+  expect_true(all(c("expr", "cells", "sample_metadata", "embedding", "guidance") %in% names(muscat_export)))
+  expect_equal(muscat_export$cluster_col, obj$annotation_col)
+
+  cellchat_export <- export_for_handoff(obj, target = "CellChat")
+  expect_true("cellchat_input" %in% names(cellchat_export))
+  expect_equal(cellchat_export$cellchat_input$group.by, obj$annotation_col)
 })
 
 test_that("explore functions return expected tables", {
@@ -72,6 +88,10 @@ test_that("report builder creates html file", {
   obj <- scdown(scdown_example())
   path <- build_scdown_report(obj, outdir = tempfile("scdown-report-"))
   expect_true(file.exists(path))
+  text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  expect_match(text, "Scope and handoff")
+  expect_match(text, "Markers")
+  expect_match(text, "Communication")
 })
 
 test_that("constructor can accept long-format tables", {

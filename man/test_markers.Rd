@@ -2,7 +2,7 @@
 % Please edit documentation in R/test.R
 \name{test_markers}
 \alias{test_markers}
-\title{Test markers with per-cell Wilcoxon statistics}
+\title{Test markers with lightweight per-cell Wilcoxon statistics}
 \usage{
 test_markers(
   obj,
@@ -30,5 +30,10 @@ test_markers(
 A list with marker test tables and plot paths.
 }
 \description{
-Test markers with per-cell Wilcoxon statistics
+Test markers with lightweight per-cell Wilcoxon statistics
+}
+\details{
+This is a quick review-layer test. It is useful for prioritizing marker
+candidates, but it is not a replacement for pseudobulk, mixed-model, or
+covariate-aware specialist workflows.
 }

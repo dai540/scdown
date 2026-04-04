@@ -38,3 +38,7 @@ A list with communication test tables and plot paths.
 \description{
 Test communication scores by permutation
 }
+\details{
+This is an exploratory permutation layer over the built-in communication
+score. Use a specialist framework when communication is a central claim.
+}

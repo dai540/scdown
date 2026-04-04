@@ -28,7 +28,7 @@
   out[order(out$cell_type, out$p_adj, -out$marker_score), , drop = FALSE]
 }
 
-#' Test markers with per-cell Wilcoxon statistics
+#' Test markers with lightweight per-cell Wilcoxon statistics
 #'
 #' @param obj A `scdown_obj`.
 #' @param top_n Number of marker tests to keep per cell type.
@@ -38,6 +38,11 @@
 #' @param outdir Optional output directory.
 #'
 #' @return A list with marker test tables and plot paths.
+#'
+#' @details
+#' This is a quick review-layer test. It is useful for prioritizing marker
+#' candidates, but it is not a replacement for pseudobulk, mixed-model, or
+#' covariate-aware specialist workflows.
 #' @export
 test_markers <- function(obj,
                          top_n = 10L,
@@ -80,6 +85,11 @@ test_markers <- function(obj,
 #' @param outdir Optional output directory.
 #'
 #' @return A list with composition test tables and plot paths.
+#'
+#' @details
+#' This is a lightweight sample-level fraction test. It is useful for quick
+#' screening, but specialist composition or abundance models should take over
+#' when composition is a primary result.
 #' @export
 test_composition <- function(obj, level = c("cell_type", "lineage"), outdir = NULL) {
   stopifnot(inherits(obj, "scdown_obj"))
@@ -126,6 +136,11 @@ test_composition <- function(obj, level = c("cell_type", "lineage"), outdir = NU
 #' @param outdir Optional output directory.
 #'
 #' @return A list with signature test tables and plot paths.
+#'
+#' @details
+#' This is a compact group comparison over sample-level mean signature scores.
+#' It is intended for review and prioritization, not as a replacement for more
+#' flexible specialist modeling.
 #' @export
 test_signature <- function(obj, signatures, signature_sets = NULL, outdir = NULL) {
   stopifnot(inherits(obj, "scdown_obj"))
@@ -182,6 +197,10 @@ test_signature <- function(obj, signatures, signature_sets = NULL, outdir = NULL
 #' @param outdir Optional output directory.
 #'
 #' @return A list with communication test tables and plot paths.
+#'
+#' @details
+#' This is an exploratory permutation layer over the built-in communication
+#' score. Use a specialist framework when communication is a central claim.
 #' @export
 test_communication <- function(obj,
                                lr_pairs = NULL,

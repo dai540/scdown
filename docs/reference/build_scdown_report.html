@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,7 @@
 <span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"exhaustion"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span>,</span>
 <span>  signature_sets <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  run_tests <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scenario <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"generic"</span>, <span class="st">"pbmc"</span>, <span class="st">"tumor_immune"</span>, <span class="st">"patient_comparison"</span><span class="op">)</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"scdown-report-"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -74,7 +75,13 @@
 
 
 <dt id="arg-run-tests">run_tests<a class="anchor" aria-label="anchor" href="#arg-run-tests"></a></dt>
-<dd><p>Whether to include sample-aware tests when possible.</p></dd>
+<dd><p>Whether to include lightweight tests and, when possible,
+sample-aware tests.</p></dd>
+
+
+<dt id="arg-scenario">scenario<a class="anchor" aria-label="anchor" href="#arg-scenario"></a></dt>
+<dd><p>One of <code>"generic"</code>, <code>"pbmc"</code>, <code>"tumor_immune"</code>, or
+<code>"patient_comparison"</code>. Used for the scope and handoff section.</p></dd>
 
 
 <dt id="arg-outdir">outdir<a class="anchor" aria-label="anchor" href="#arg-outdir"></a></dt>
@@ -95,7 +102,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

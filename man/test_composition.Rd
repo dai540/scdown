@@ -19,3 +19,8 @@ A list with composition test tables and plot paths.
 \description{
 Test composition differences across groups
 }
+\details{
+This is a lightweight sample-level fraction test. It is useful for quick
+screening, but specialist composition or abundance models should take over
+when composition is a primary result.
+}

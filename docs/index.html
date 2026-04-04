@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -134,15 +134,27 @@
 <h2 id="recommended-positioning">Recommended positioning<a class="anchor" aria-label="anchor" href="#recommended-positioning"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/scope_table.html">scope_table</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"pbmc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"tumor_immune"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"patient_comparison"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="specialist-handoff">Specialist handoff<a class="anchor" aria-label="anchor" href="#specialist-handoff"></a>
+</h2>
+<p>If an endpoint becomes central enough for publication-grade modeling, prepare a handoff object instead of stretching <code>scdown</code> beyond its intended scope.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">muscat_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"muscat"</span><span class="op">)</span></span>
+<span><span class="va">dreamlet_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"dreamlet"</span><span class="op">)</span></span>
+<span><span class="va">milor_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"miloR"</span><span class="op">)</span></span>
+<span><span class="va">cellchat_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"CellChat"</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code> also includes a scope and handoff section, plus marker and communication tests when <code>run_tests = TRUE</code>.</p>
+</div>
+<div class="section level2">
 <h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"IL7R"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -164,7 +176,7 @@
 <div class="section level2">
 <h2 id="direct-input">Direct input<a class="anchor" aria-label="anchor" href="#direct-input"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="va">sce</span>,</span>
 <span>  annotation_col <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
@@ -188,6 +200,8 @@
 <ul>
 <li><code><a href="reference/scdown.html">scdown()</a></code></li>
 <li><code><a href="reference/recommended_pipeline.html">recommended_pipeline()</a></code></li>
+<li><code><a href="reference/scope_table.html">scope_table()</a></code></li>
+<li><code><a href="reference/export_for_handoff.html">export_for_handoff()</a></code></li>
 <li><code><a href="reference/summarize_dataset.html">summarize_dataset()</a></code></li>
 <li><code><a href="reference/collapse_lineage.html">collapse_lineage()</a></code></li>
 <li><code><a href="reference/plot_map.html">plot_map()</a></code></li>
@@ -253,7 +267,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

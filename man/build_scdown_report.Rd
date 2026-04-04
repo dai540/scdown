@@ -10,6 +10,7 @@ build_scdown_report(
   signatures = c("cytotoxic", "exhaustion", "antigen_presentation"),
   signature_sets = NULL,
   run_tests = TRUE,
+  scenario = c("generic", "pbmc", "tumor_immune", "patient_comparison"),
   outdir = tempfile("scdown-report-")
 )
 }
@@ -22,7 +23,11 @@ build_scdown_report(
 
 \item{signature_sets}{Optional custom signatures.}
 
-\item{run_tests}{Whether to include sample-aware tests when possible.}
+\item{run_tests}{Whether to include lightweight tests and, when possible,
+sample-aware tests.}
+
+\item{scenario}{One of \code{"generic"}, \code{"pbmc"}, \code{"tumor_immune"}, or
+\code{"patient_comparison"}. Used for the scope and handoff section.}
 
 \item{outdir}{Output directory.}
 }

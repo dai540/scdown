@@ -1,7 +1,7 @@
 Package: scdown
 Type: Package
 Title: Simple Downstream Analysis After Cell Annotation
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person(
       given = "Daiki",
@@ -24,7 +24,7 @@ BugReports: https://github.com/dai540/scdown/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends:
     R (>= 4.2.0)
 Imports:
