@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Create a <code>scdown</code> object</h1>
-      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/scdown.R" class="external-link"><code>R/scdown.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/object.R" class="external-link"><code>R/object.R</code></a></small>
       <div class="d-none name"><code>scdown.Rd</code></div>
     </div>
 
@@ -51,7 +51,11 @@
 <span>  reduced_dim <span class="op">=</span> <span class="st">"UMAP"</span>,</span>
 <span>  embedding <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  assay_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  expression_layer <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  expression_layer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  signatures <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  marker_panels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lineage_mapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lr_pairs <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,6 +99,22 @@ object.</p></dd>
 
 <dt id="arg-expression-layer">expression_layer<a class="anchor" aria-label="anchor" href="#arg-expression-layer"></a></dt>
 <dd><p>Optional Seurat layer/slot name.</p></dd>
+
+
+<dt id="arg-signatures">signatures<a class="anchor" aria-label="anchor" href="#arg-signatures"></a></dt>
+<dd><p>Optional named list of custom signatures.</p></dd>
+
+
+<dt id="arg-marker-panels">marker_panels<a class="anchor" aria-label="anchor" href="#arg-marker-panels"></a></dt>
+<dd><p>Optional named list of custom marker panels.</p></dd>
+
+
+<dt id="arg-lineage-mapping">lineage_mapping<a class="anchor" aria-label="anchor" href="#arg-lineage-mapping"></a></dt>
+<dd><p>Optional data frame with <code>pattern</code> and <code>lineage</code>.</p></dd>
+
+
+<dt id="arg-lr-pairs">lr_pairs<a class="anchor" aria-label="anchor" href="#arg-lr-pairs"></a></dt>
+<dd><p>Optional data frame with <code>ligand</code>, <code>receptor</code>, and <code>pathway</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

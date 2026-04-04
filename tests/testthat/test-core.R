@@ -1,28 +1,54 @@
-test_that("constructor returns scdown object", {
+test_that("constructor returns sparse-first scdown object", {
   obj <- scdown(scdown_example())
   expect_s3_class(obj, "scdown_obj")
-  expect_true(all(c("expr", "cells", "embedding") %in% names(obj)))
+  expect_true(all(c("expr", "cells", "embedding", "resources") %in% names(obj)))
+  expect_equal(ncol(obj$expr), nrow(obj$cells))
+  expect_equal(rownames(obj$expr), obj$features$gene)
 })
 
-test_that("lineage collapse adds lineage", {
-  obj <- collapse_lineage(scdown(scdown_example()))
-  expect_true("lineage" %in% names(obj$cells))
+test_that("lineage collapse uses defaults and custom mappings", {
+  obj <- scdown(scdown_example())
+  obj_default <- collapse_lineage(obj)
+  expect_true("lineage" %in% names(obj_default$cells))
+
+  custom_map <- data.frame(
+    pattern = c("cd4", "cd8", "nk", "b", "mono", "macro"),
+    lineage = c("L1", "L1", "L1", "L2", "L3", "L3"),
+    stringsAsFactors = FALSE
+  )
+  obj_custom <- collapse_lineage(obj, mapping = custom_map)
+  expect_true(all(obj_custom$cells$lineage %in% c("L1", "L2", "L3")))
 })
 
-test_that("built-ins are available", {
+test_that("built-ins and custom resources are available", {
+  obj <- scdown(
+    scdown_example(),
+    signatures = list(my_state = c("CD3D", "IL7R")),
+    marker_panels = list(my_panel = c("CD3D", "TRAC"))
+  )
   expect_true("cytotoxic" %in% list_signatures())
+  expect_true("my_state" %in% list_signatures(obj))
   expect_true("NKG7" %in% get_signature("cytotoxic"))
+  expect_true("CD3D" %in% get_signature("my_state", obj))
 })
 
-test_that("core analysis functions return expected tables", {
+test_that("explore functions return expected tables", {
   obj <- collapse_lineage(scdown(scdown_example()))
   expect_true("embedding_cells" %in% names(plot_map(obj)$tables))
-  expect_true("top_marker_per_celltype" %in% names(find_markers(obj)$tables))
+  expect_true("top_marker_per_celltype" %in% names(explore_markers(obj)$tables))
   expect_true("gene_average_by_celltype" %in% names(plot_gene(obj, genes = c("CD3D", "LYZ"))$tables))
   expect_true("composition_by_sample" %in% names(plot_composition(obj)$tables))
   expect_true("annotation_check_score" %in% names(check_annotation(obj)$tables))
   expect_true("signature_score_by_celltype" %in% names(plot_signature(obj, signatures = "cytotoxic")$tables))
   expect_true("communication_pair_summary" %in% names(infer_communication(obj)$tables))
+})
+
+test_that("sample-aware test functions return expected tables", {
+  obj <- collapse_lineage(scdown(scdown_example()))
+  expect_true("top_marker_tests" %in% names(test_markers(obj, top_n = 3)$tables))
+  expect_true("composition_test_table" %in% names(test_composition(obj)$tables))
+  expect_true("signature_test_table" %in% names(test_signature(obj, signatures = c("cytotoxic", "b_cell"))$tables))
+  expect_true("communication_test_table" %in% names(test_communication(obj, n_perm = 5)$tables))
 })
 
 test_that("markers stay positive and specific in example data", {
@@ -37,6 +63,21 @@ test_that("report builder creates html file", {
   obj <- scdown(scdown_example())
   path <- build_scdown_report(obj, outdir = tempfile("scdown-report-"))
   expect_true(file.exists(path))
+})
+
+test_that("constructor can accept long-format tables", {
+  demo <- scdown_example()
+  long_expr <- .matrix_to_long_subset(
+    raw_mat = demo$expr,
+    analysis_mat = demo$expr,
+    genes = rownames(demo$expr),
+    cells = demo$cells,
+    sample_col = "sample",
+    annotation_col = "cell_type"
+  )
+  long_expr$group <- rep(demo$cells$group, times = nrow(demo$expr))
+  obj <- scdown(long_expr, annotation_col = "cell_type", sample_col = "sample", group_col = "group", embedding = demo$embedding)
+  expect_s3_class(obj, "scdown_obj")
 })
 
 test_that("constructor can accept SingleCellExperiment when available", {
@@ -55,7 +96,7 @@ test_that("constructor can accept SingleCellExperiment when available", {
     row.names = c("cell1", "cell2")
   )
   sce <- SingleCellExperiment::SingleCellExperiment(
-    assays = list(logcounts = mat),
+    assays = list(counts = mat),
     colData = coldata
   )
   SingleCellExperiment::reducedDim(sce, "UMAP") <- matrix(

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,8 @@
 <span>  <span class="va">obj</span>,</span>
 <span>  genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"NKG7"</span>, <span class="st">"LYZ"</span>, <span class="st">"MS4A1"</span><span class="op">)</span>,</span>
 <span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"exhaustion"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span>,</span>
+<span>  signature_sets <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  run_tests <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"scdown-report-"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -64,6 +66,14 @@
 
 <dt id="arg-signatures">signatures<a class="anchor" aria-label="anchor" href="#arg-signatures"></a></dt>
 <dd><p>User-selected signatures.</p></dd>
+
+
+<dt id="arg-signature-sets">signature_sets<a class="anchor" aria-label="anchor" href="#arg-signature-sets"></a></dt>
+<dd><p>Optional custom signatures.</p></dd>
+
+
+<dt id="arg-run-tests">run_tests<a class="anchor" aria-label="anchor" href="#arg-run-tests"></a></dt>
+<dd><p>Whether to include sample-aware tests when possible.</p></dd>
 
 
 <dt id="arg-outdir">outdir<a class="anchor" aria-label="anchor" href="#arg-outdir"></a></dt>

@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,27 +54,14 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="scdown">scdown<a class="anchor" aria-label="anchor" href="#scdown"></a>
 </h1></div>
-<p><code>scdown</code> is a simple R package for post-annotation downstream analysis of single-cell RNA-seq data.</p>
-<p>The package is intentionally short and practical:</p>
+<p><code>scdown</code> is a simple downstream toolkit for annotated single-cell RNA-seq data.</p>
+<p>It is built around one short idea:</p>
 <ul>
-<li>build one analysis object</li>
-<li>inspect cell maps</li>
-<li>find positive markers</li>
-<li>visualize user-selected genes</li>
-<li>summarize composition</li>
-<li>check annotation with marker panels</li>
-<li>score signatures</li>
-<li>inspect exploratory communication</li>
-<li>export a compact HTML report</li>
+<li>make one analysis object</li>
+<li>run fast exploratory summaries</li>
+<li>run sample-aware tests only when you need them</li>
 </ul>
-<p>It accepts:</p>
-<ul>
-<li>a long-format expression table</li>
-<li>a list with <code>expr</code>, <code>cells</code>, and optional <code>embedding</code>
-</li>
-<li><code>SingleCellExperiment</code></li>
-<li><code>Seurat</code></li>
-</ul>
+<p>Internally, <code>scdown</code> keeps data in a sparse-first matrix form, so it no longer needs to expand everything into a huge long table before analysis.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -90,19 +77,55 @@
 <span></span>
 <span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span><span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/find_markers.html">find_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/run_core.html">run_core</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="explore">Explore<a class="anchor" aria-label="anchor" href="#explore"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/explore_markers.html">explore_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_gene.html">plot_gene</a></span><span class="op">(</span><span class="va">obj</span>, genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"NKG7"</span>, <span class="st">"LYZ"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_composition.html">plot_composition</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/check_annotation.html">check_annotation</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"exhaustion"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/infer_communication.html">infer_communication</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/infer_communication.html">infer_communication</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="test">Test<a class="anchor" aria-label="anchor" href="#test"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/test_markers.html">test_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/test_composition.html">test_composition</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/test_signature.html">test_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"b_cell"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/test_communication.html">test_communication</a></span><span class="op">(</span><span class="va">obj</span>, n_perm <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obj_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"IL7R"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  marker_panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_t_panel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"TRAC"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  lineage_mapping <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cd4"</span>, <span class="st">"cd8"</span>, <span class="st">"nk"</span>, <span class="st">"b"</span>, <span class="st">"mono"</span>, <span class="st">"macro"</span><span class="op">)</span>,</span>
+<span>    lineage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T/NK"</span>, <span class="st">"T/NK"</span>, <span class="st">"T/NK"</span>, <span class="st">"B/Plasma"</span>, <span class="st">"Myeloid"</span>, <span class="st">"Myeloid"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  lr_pairs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    ligand <span class="op">=</span> <span class="st">"CCL5"</span>,</span>
+<span>    receptor <span class="op">=</span> <span class="st">"CCR5"</span>,</span>
+<span>    pathway <span class="op">=</span> <span class="st">"chemokine"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj_custom</span>, signatures <span class="op">=</span> <span class="st">"my_state"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/check_annotation.html">check_annotation</a></span><span class="op">(</span><span class="va">obj_custom</span>, panels <span class="op">=</span> <span class="st">"my_t_panel"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="direct-input">Direct input<a class="anchor" aria-label="anchor" href="#direct-input"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="va">sce</span>,</span>
 <span>  annotation_col <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
@@ -128,13 +151,21 @@
 <li><code><a href="reference/summarize_dataset.html">summarize_dataset()</a></code></li>
 <li><code><a href="reference/collapse_lineage.html">collapse_lineage()</a></code></li>
 <li><code><a href="reference/plot_map.html">plot_map()</a></code></li>
+<li><code><a href="reference/explore_markers.html">explore_markers()</a></code></li>
 <li><code><a href="reference/find_markers.html">find_markers()</a></code></li>
 <li><code><a href="reference/plot_gene.html">plot_gene()</a></code></li>
 <li><code><a href="reference/plot_composition.html">plot_composition()</a></code></li>
+<li><code><a href="reference/explore_composition.html">explore_composition()</a></code></li>
 <li><code><a href="reference/check_annotation.html">check_annotation()</a></code></li>
 <li><code><a href="reference/plot_signature.html">plot_signature()</a></code></li>
+<li><code><a href="reference/explore_signature.html">explore_signature()</a></code></li>
 <li><code><a href="reference/plot_heatmap.html">plot_heatmap()</a></code></li>
 <li><code><a href="reference/infer_communication.html">infer_communication()</a></code></li>
+<li><code><a href="reference/explore_communication.html">explore_communication()</a></code></li>
+<li><code><a href="reference/test_markers.html">test_markers()</a></code></li>
+<li><code><a href="reference/test_composition.html">test_composition()</a></code></li>
+<li><code><a href="reference/test_signature.html">test_signature()</a></code></li>
+<li><code><a href="reference/test_communication.html">test_communication()</a></code></li>
 <li><code><a href="reference/run_core.html">run_core()</a></code></li>
 <li><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code></li>
 </ul>
@@ -151,9 +182,8 @@
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 

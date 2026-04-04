@@ -1,7 +1,7 @@
 Package: scdown
 Type: Package
 Title: Simple Downstream Analysis After Cell Annotation
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person(
       given = "Daiki",
@@ -12,9 +12,11 @@ Authors@R: c(
   )
 Description: Provides a simple, practical downstream workflow for annotated
     single-cell RNA-seq data with an emphasis on immune-focused datasets.
-    The package keeps the interface short: build an analysis object, inspect
-    maps, markers, user-selected genes, composition, annotation quality,
-    signatures, communication, and create a compact HTML report.
+    The package keeps the interface short while separating lightweight
+    exploration from sample-aware testing. Inputs are standardized into a
+    sparse-first matrix representation, then reused across maps, markers,
+    user-selected genes, composition, annotation quality, signatures,
+    communication, and compact HTML reports.
 URL: https://dai540.github.io/scdown/,
     https://github.com/dai540/scdown
 BugReports: https://github.com/dai540/scdown/issues
@@ -25,13 +27,13 @@ RoxygenNote: 7.3.2
 Depends:
     R (>= 4.2.0)
 Imports:
+    Matrix,
     grDevices,
     graphics,
     stats,
     utils
 Suggests:
     knitr,
-    Matrix,
     pkgdown,
     rmarkdown,
     S4Vectors,

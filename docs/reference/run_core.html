@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Run the core downstream workflow</h1>
-      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/analysis-extended.R" class="external-link"><code>R/analysis-extended.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/explore.R" class="external-link"><code>R/explore.R</code></a></small>
       <div class="d-none name"><code>run_core.Rd</code></div>
     </div>
 
@@ -46,6 +46,7 @@
 <span>  <span class="va">obj</span>,</span>
 <span>  genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"NKG7"</span>, <span class="st">"LYZ"</span>, <span class="st">"MS4A1"</span><span class="op">)</span>,</span>
 <span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"exhaustion"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span>,</span>
+<span>  signature_sets <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -64,6 +65,10 @@
 
 <dt id="arg-signatures">signatures<a class="anchor" aria-label="anchor" href="#arg-signatures"></a></dt>
 <dd><p>Signatures to score.</p></dd>
+
+
+<dt id="arg-signature-sets">signature_sets<a class="anchor" aria-label="anchor" href="#arg-signature-sets"></a></dt>
+<dd><p>Optional custom signatures.</p></dd>
 
 
 <dt id="arg-outdir">outdir<a class="anchor" aria-label="anchor" href="#arg-outdir"></a></dt>

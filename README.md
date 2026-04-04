@@ -1,25 +1,15 @@
 # scdown
 
-`scdown` is a simple R package for post-annotation downstream analysis of single-cell RNA-seq data.
+`scdown` is a simple downstream toolkit for annotated single-cell RNA-seq data.
 
-The package is intentionally short and practical:
+It is built around one short idea:
 
-- build one analysis object
-- inspect cell maps
-- find positive markers
-- visualize user-selected genes
-- summarize composition
-- check annotation with marker panels
-- score signatures
-- inspect exploratory communication
-- export a compact HTML report
+- make one analysis object
+- run fast exploratory summaries
+- run sample-aware tests only when you need them
 
-It accepts:
-
-- a long-format expression table
-- a list with `expr`, `cells`, and optional `embedding`
-- `SingleCellExperiment`
-- `Seurat`
+Internally, `scdown` keeps data in a sparse-first matrix form, so it no longer
+needs to expand everything into a huge long table before analysis.
 
 ## Installation
 
@@ -35,14 +25,50 @@ library(scdown)
 
 obj <- scdown(scdown_example())
 
+run_core(obj)
+build_scdown_report(obj)
+```
+
+## Explore
+
+```r
 plot_map(obj)
-find_markers(obj)
+explore_markers(obj)
 plot_gene(obj, genes = c("CD3D", "NKG7", "LYZ"))
 plot_composition(obj)
-check_annotation(obj)
 plot_signature(obj, signatures = c("cytotoxic", "exhaustion"))
 infer_communication(obj)
-build_scdown_report(obj)
+```
+
+## Test
+
+```r
+test_markers(obj)
+test_composition(obj)
+test_signature(obj, signatures = c("cytotoxic", "b_cell"))
+test_communication(obj, n_perm = 25)
+```
+
+## Custom resources
+
+```r
+obj_custom <- scdown(
+  scdown_example(),
+  signatures = list(my_state = c("CD3D", "IL7R")),
+  marker_panels = list(my_t_panel = c("CD3D", "TRAC")),
+  lineage_mapping = data.frame(
+    pattern = c("cd4", "cd8", "nk", "b", "mono", "macro"),
+    lineage = c("T/NK", "T/NK", "T/NK", "B/Plasma", "Myeloid", "Myeloid")
+  ),
+  lr_pairs = data.frame(
+    ligand = "CCL5",
+    receptor = "CCR5",
+    pathway = "chemokine"
+  )
+)
+
+plot_signature(obj_custom, signatures = "my_state")
+check_annotation(obj_custom, panels = "my_t_panel")
 ```
 
 ## Direct input
@@ -72,12 +98,20 @@ obj_seurat <- scdown(
 - `summarize_dataset()`
 - `collapse_lineage()`
 - `plot_map()`
+- `explore_markers()`
 - `find_markers()`
 - `plot_gene()`
 - `plot_composition()`
+- `explore_composition()`
 - `check_annotation()`
 - `plot_signature()`
+- `explore_signature()`
 - `plot_heatmap()`
 - `infer_communication()`
+- `explore_communication()`
+- `test_markers()`
+- `test_composition()`
+- `test_signature()`
+- `test_communication()`
 - `run_core()`
 - `build_scdown_report()`

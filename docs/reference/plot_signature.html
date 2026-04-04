@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot signature scores</h1>
-      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/analysis-extended.R" class="external-link"><code>R/analysis-extended.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dai540/scdown/blob/HEAD/R/explore.R" class="external-link"><code>R/explore.R</code></a></small>
       <div class="d-none name"><code>plot_signature.Rd</code></div>
     </div>
 
@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_signature</span><span class="op">(</span><span class="va">obj</span>, <span class="va">signatures</span>, outdir <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_signature</span><span class="op">(</span><span class="va">obj</span>, <span class="va">signatures</span>, signature_sets <span class="op">=</span> <span class="cn">NULL</span>, outdir <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -54,7 +54,11 @@
 
 
 <dt id="arg-signatures">signatures<a class="anchor" aria-label="anchor" href="#arg-signatures"></a></dt>
-<dd><p>Character vector of built-in signature names.</p></dd>
+<dd><p>Character vector of signature names or a named list of signatures.</p></dd>
+
+
+<dt id="arg-signature-sets">signature_sets<a class="anchor" aria-label="anchor" href="#arg-signature-sets"></a></dt>
+<dd><p>Optional named list of custom signatures to merge with built-ins.</p></dd>
 
 
 <dt id="arg-outdir">outdir<a class="anchor" aria-label="anchor" href="#arg-outdir"></a></dt>

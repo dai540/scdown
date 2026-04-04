@@ -5,11 +5,16 @@
 <url><loc>https://dai540.github.io/scdown/authors.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/index.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/LICENSE-text.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/LICENSE.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/news/index.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/build_scdown_report.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/check_annotation.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/collapse_lineage.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/default_lineage_mapping.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/explore_communication.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/explore_composition.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/explore_markers.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/explore_signature.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/find_markers.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/get_signature.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/immune_marker_panels.html</loc></url>
@@ -27,5 +32,9 @@
 <url><loc>https://dai540.github.io/scdown/reference/scdown.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/scdown_example.html</loc></url>
 <url><loc>https://dai540.github.io/scdown/reference/summarize_dataset.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/test_communication.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/test_composition.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/test_markers.html</loc></url>
+<url><loc>https://dai540.github.io/scdown/reference/test_signature.html</loc></url>
 </urlset>
 

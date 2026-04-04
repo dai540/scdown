@@ -8,6 +8,8 @@ build_scdown_report(
   obj,
   genes = c("CD3D", "NKG7", "LYZ", "MS4A1"),
   signatures = c("cytotoxic", "exhaustion", "antigen_presentation"),
+  signature_sets = NULL,
+  run_tests = TRUE,
   outdir = tempfile("scdown-report-")
 )
 }
@@ -17,6 +19,10 @@ build_scdown_report(
 \item{genes}{User-selected genes.}
 
 \item{signatures}{User-selected signatures.}
+
+\item{signature_sets}{Optional custom signatures.}
+
+\item{run_tests}{Whether to include sample-aware tests when possible.}
 
 \item{outdir}{Output directory.}
 }

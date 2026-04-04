@@ -18,13 +18,11 @@ library(scdown)
 library(knitr)
 ```
 
-`scdown` is designed to stay short after annotation.
+`scdown` stays intentionally short:
 
 1. build one `scdown` object
-2. inspect maps and markers
-3. inspect genes of interest
-4. summarize composition and signatures
-5. export a compact report
+2. run quick exploratory summaries
+3. run sample-aware tests only when needed
 
 ## Build an object
 
@@ -33,34 +31,40 @@ obj <- scdown(scdown_example())
 obj
 ```
 
-## Map
+## Explore
 
 ```{r}
 map_res <- plot_map(obj)
-kable(head(map_res$tables$embedding_cells, 10))
-```
-
-## Markers
-
-```{r}
-marker_res <- find_markers(obj, top_n = 3)
-kable(marker_res$tables$top_marker_per_celltype)
-```
-
-## Genes of interest
-
-```{r}
+marker_res <- explore_markers(obj, top_n = 3)
 gene_res <- plot_gene(obj, genes = c("CD3D", "NKG7", "LYZ"))
+sig_res <- plot_signature(obj, signatures = c("cytotoxic", "b_cell"))
+
+kable(head(map_res$tables$embedding_cells, 6))
+kable(marker_res$tables$top_marker_per_celltype)
 kable(gene_res$tables$gene_average_by_celltype)
+kable(sig_res$tables$signature_score_by_celltype)
 ```
 
-## Composition and signatures
+## Test
 
 ```{r}
-comp_res <- plot_composition(obj)
-sig_res <- plot_signature(obj, signatures = c("cytotoxic", "exhaustion"))
-kable(comp_res$tables$composition_by_sample)
-kable(sig_res$tables$signature_score_by_celltype)
+comp_test <- test_composition(obj)
+sig_test <- test_signature(obj, signatures = c("cytotoxic", "b_cell"))
+
+kable(comp_test$tables$composition_test_table)
+kable(sig_test$tables$signature_test_table)
+```
+
+## Custom resources
+
+```{r}
+obj_custom <- scdown(
+  scdown_example(),
+  signatures = list(my_state = c("CD3D", "IL7R")),
+  marker_panels = list(my_t_panel = c("CD3D", "TRAC"))
+)
+
+kable(plot_signature(obj_custom, signatures = "my_state")$tables$signature_score_by_celltype)
 ```
 
 ## Report

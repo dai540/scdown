@@ -26,23 +26,35 @@ navbar:
           href: articles/getting-started.html
 
 reference:
-  - title: Core
+  - title: Object
     contents:
       - scdown
       - scdown_example
       - summarize_dataset
       - collapse_lineage
+      - build_scdown_report
+      - run_core
+  - title: Explore
+    contents:
       - plot_map
+      - explore_markers
       - find_markers
       - plot_gene
       - plot_composition
+      - explore_composition
       - check_annotation
       - plot_signature
+      - explore_signature
       - plot_heatmap
       - infer_communication
-      - run_core
-      - build_scdown_report
-  - title: Built-ins
+      - explore_communication
+  - title: Test
+    contents:
+      - test_markers
+      - test_composition
+      - test_signature
+      - test_communication
+  - title: Resources
     contents:
       - immune_signatures
       - immune_marker_panels
