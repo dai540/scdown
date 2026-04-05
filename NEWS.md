@@ -1,3 +1,8 @@
+# scdown 0.4.2
+
+- fixed the GitHub release workflow by installing vignette-building dependencies before `R CMD build`
+- added manual dispatch support to the release workflow so a release can be rerun without creating another tag first
+
 # scdown 0.4.1
 
 - added a release workflow that can publish GitHub releases from pushed version tags

@@ -9,7 +9,7 @@ authors:
 repository-code: "https://github.com/dai540/scdown"
 url: "https://dai540.github.io/scdown/"
 license: MIT
-version: 0.4.1
+version: 0.4.2
 date-released: 2026-04-05
 abstract: >
   Simple downstream analysis after cell annotation for single-cell RNA-seq,

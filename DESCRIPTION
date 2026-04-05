@@ -1,7 +1,7 @@
 Package: scdown
 Type: Package
 Title: Simple Downstream Analysis After Cell Annotation
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
     person(
       given = "Daiki",
