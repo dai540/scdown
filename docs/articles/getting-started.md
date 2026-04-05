@@ -170,5 +170,5 @@ kable(plot_signature(obj_custom, signatures = "my_state")$tables$signature_score
 ``` r
 report_path <- build_scdown_report(obj)
 report_path
-#> [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpG47Sxb\\scdown-report-f8c36f0802/scdown_report.html"
+#> [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpOcU3lh\\scdown-report-5c3428274113/scdown_report.html"
 ```

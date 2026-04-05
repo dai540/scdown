@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@
     <li><a class="dropdown-item" href="articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">News</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -55,6 +56,7 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="scdown">scdown<a class="anchor" aria-label="anchor" href="#scdown"></a>
 </h1></div>
+<p><a href="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://github.com/dai540/scdown/releases" class="external-link"><img src="https://img.shields.io/github/v/release/dai540/scdown?display_name=tag" alt="Latest release"></a> <a href="https://github.com/dai540/scdown/blob/main/LICENSE.txt" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
 <p><code>scdown</code> is a simple downstream toolkit for annotated single-cell RNA-seq data.</p>
 <p>It is best used <strong>after</strong> QC, normalization, embedding, clustering, and cell annotation. In other words, <code>scdown</code> is a downstream hub, not a full upstream single-cell framework.</p>
 <div class="section level2">
@@ -90,6 +92,8 @@
 </li>
 <li>Reference: <a href="https://dai540.github.io/scdown/reference/index.html">https://dai540.github.io/scdown/reference/index.html</a>
 </li>
+<li>News: <a href="https://dai540.github.io/scdown/news/index.html">https://dai540.github.io/scdown/news/index.html</a>
+</li>
 </ul>
 </div>
 <div class="section level2">
@@ -98,6 +102,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>GitHub can read <a href="https://github.com/dai540/scdown/blob/main/CITATION.cff" class="external-link">CITATION.cff</a>, and R can read <code>citation("scdown")</code> from the package.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -149,7 +158,7 @@
 <span><span class="va">dreamlet_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"dreamlet"</span><span class="op">)</span></span>
 <span><span class="va">milor_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"miloR"</span><span class="op">)</span></span>
 <span><span class="va">cellchat_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"CellChat"</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code> also includes a scope and handoff section, plus marker and communication tests when <code>run_tests = TRUE</code>.</p>
+<p><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code> also includes a scope and handoff section, plus marker and communication tests when <code>run_tests = TRUE</code>. These built-in tests are for screening and prioritization, not a replacement for specialist models.</p>
 </div>
 <div class="section level2">
 <h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
@@ -236,8 +245,9 @@
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 

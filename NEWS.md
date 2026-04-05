@@ -1,3 +1,11 @@
+# scdown 0.4.1
+
+- added a release workflow that can publish GitHub releases from pushed version tags
+- expanded CI from a single Linux check to a multi-OS matrix with an extra devel check on Linux
+- split and strengthened tests around sparse inputs, failure modes, report output, and handoff schemas
+- added repository-facing metadata files such as `CITATION.cff` and issue templates to improve public package trust signals
+- clarified in the HTML report that built-in tests are screening-oriented and should hand off to specialist methods for primary claims
+
 # scdown 0.4.0
 
 - added `scope_table()` to make the intended boundary of `scdown` explicit

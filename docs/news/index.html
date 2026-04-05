@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
     <li><a class="dropdown-item" href="../articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul></li>
+<li class="active nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -36,6 +37,14 @@
       <small>Source: <a href="https://github.com/dai540/scdown/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.1" id="scdown-041">scdown 0.4.1<a class="anchor" aria-label="anchor" href="#scdown-041"></a></h2>
+<ul><li>added a release workflow that can publish GitHub releases from pushed version tags</li>
+<li>expanded CI from a single Linux check to a multi-OS matrix with an extra devel check on Linux</li>
+<li>split and strengthened tests around sparse inputs, failure modes, report output, and handoff schemas</li>
+<li>added repository-facing metadata files such as <code>CITATION.cff</code> and issue templates to improve public package trust signals</li>
+<li>clarified in the HTML report that built-in tests are screening-oriented and should hand off to specialist methods for primary claims</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="scdown-040">scdown 0.4.0<a class="anchor" aria-label="anchor" href="#scdown-040"></a></h2>
 <ul><li>added <code><a href="../reference/scope_table.html">scope_table()</a></code> to make the intended boundary of <code>scdown</code> explicit</li>

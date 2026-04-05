@@ -10,7 +10,7 @@ home:
 
 navbar:
   structure:
-    left: [intro, reference, articles]
+    left: [intro, reference, articles, news]
     right: [search]
   components:
     intro:
@@ -26,6 +26,9 @@ navbar:
           href: articles/getting-started.html
         - text: Recommended Pipeline
           href: articles/recommended-pipeline.html
+    news:
+      text: News
+      href: news/index.html
 
 reference:
   - title: Object

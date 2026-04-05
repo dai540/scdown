@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: scdown website
+    url: https://dai540.github.io/scdown/
+    about: Read the docs and recommended pipeline before opening an issue.

@@ -7,16 +7,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/dai540/scdown/blob/HEAD/DESCRIPTION)
+[`inst/CITATION`](https://github.com/dai540/scdown/blob/HEAD/inst/CITATION)
 
-User D (2026). *scdown: Simple Downstream Analysis After Cell
-Annotation*. R package version 0.4.0,
-<https://dai540.github.io/scdown/>.
+User, D. (2026). scdown: Simple Downstream Analysis After Cell
+Annotation. R package version 0.4.1. https://github.com/dai540/scdown
 
     @Manual{,
       title = {scdown: Simple Downstream Analysis After Cell Annotation},
       author = {Daiki User},
       year = {2026},
-      note = {R package version 0.4.0},
-      url = {https://dai540.github.io/scdown/},
+      note = {R package version 0.4.1},
+      url = {https://github.com/dai540/scdown},
     }

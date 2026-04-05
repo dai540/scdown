@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: scdown
+message: "If you use scdown, please cite the repository and the tagged release you used."
+type: software
+authors:
+  - family-names: User
+    given-names: Daiki
+    email: daik54015@gmail.com
+repository-code: "https://github.com/dai540/scdown"
+url: "https://dai540.github.io/scdown/"
+license: MIT
+version: 0.4.1
+date-released: 2026-04-05
+abstract: >
+  Simple downstream analysis after cell annotation for single-cell RNA-seq,
+  with fast exploratory summaries, lightweight sample-aware testing, and
+  explicit handoff to specialist methods.
+keywords:
+  - scRNA-seq
+  - single-cell
+  - downstream analysis
+  - annotation
+  - immune profiling

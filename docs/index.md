@@ -1,5 +1,12 @@
 # scdown
 
+[![R-CMD-check](https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml)
+[![Latest
+release](https://img.shields.io/github/v/release/dai540/scdown?display_name=tag)](https://github.com/dai540/scdown/releases)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/dai540/scdown/blob/main/LICENSE.txt)
+
 `scdown` is a simple downstream toolkit for annotated single-cell
 RNA-seq data.
 
@@ -37,6 +44,7 @@ analysis.
 - Recommended pipeline:
   <https://dai540.github.io/scdown/articles/recommended-pipeline.html>
 - Reference: <https://dai540.github.io/scdown/reference/index.html>
+- News: <https://dai540.github.io/scdown/news/index.html>
 
 ## Installation
 
@@ -44,6 +52,12 @@ analysis.
 install.packages("pak")
 pak::pak("dai540/scdown")
 ```
+
+## Citation
+
+GitHub can read
+[CITATION.cff](https://github.com/dai540/scdown/blob/main/CITATION.cff),
+and R can read `citation("scdown")` from the package.
 
 ## Example
 
@@ -101,7 +115,8 @@ cellchat_input <- export_for_handoff(obj, target = "CellChat")
 
 [`build_scdown_report()`](https://dai540.github.io/scdown/reference/build_scdown_report.md)
 also includes a scope and handoff section, plus marker and communication
-tests when `run_tests = TRUE`.
+tests when `run_tests = TRUE`. These built-in tests are for screening
+and prioritization, not a replacement for specialist models.
 
 ## Custom resources
 

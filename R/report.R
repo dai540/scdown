@@ -76,7 +76,11 @@ build_scdown_report <- function(obj,
     }
   }
   if (length(test_results)) {
-    html <- c(html, "<h2>Lightweight tests</h2>")
+    html <- c(
+      html,
+      "<h2>Lightweight tests</h2>",
+      "<p><strong>Caution:</strong> these tests are screening-oriented summaries for review and prioritization. They should not replace specialist models when an endpoint becomes a primary claim.</p>"
+    )
     if (!is.null(test_results$markers)) {
       html <- c(html, "<h3>Markers</h3>", paste0("<pre>", paste(utils::capture.output(print(utils::head(test_results$markers$tables$top_marker_tests, 10))), collapse = "\n"), "</pre>"))
     }
