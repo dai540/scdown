@@ -6,46 +6,36 @@
 \usage{
 scdown(
   x,
-  annotation_col = "cell_type",
+  annotation_col = "annotation",
   sample_col = "sample",
-  group_col = "group",
-  batch_col = NULL,
   reduced_dim = "UMAP",
   embedding = NULL,
   assay_name = NULL,
   expression_layer = NULL,
   signatures = NULL,
   marker_panels = NULL,
-  lineage_mapping = NULL,
   lr_pairs = NULL
 )
 }
 \arguments{
-\item{x}{A long-format expression table, a list with \code{expr}, optional
-\code{cells}, and optional \code{embedding}, or a \code{SingleCellExperiment} / \code{Seurat}
-object.}
+\item{x}{Input data.}
 
-\item{annotation_col}{Cell annotation column name.}
+\item{annotation_col}{Column containing cluster or annotation labels.}
 
-\item{sample_col}{Sample column name.}
+\item{sample_col}{Optional column containing sample identifiers.}
 
-\item{group_col}{Optional group column name.}
+\item{reduced_dim}{Reduced-dimension name used when extracting embeddings
+from Bioconductor or Seurat objects.}
 
-\item{batch_col}{Optional batch column name.}
-
-\item{reduced_dim}{Name of the reduced dimension to use.}
-
-\item{embedding}{Optional embedding data frame with \code{cell}, \code{UMAP1}, \code{UMAP2}.}
+\item{embedding}{Optional data frame with \code{cell}, \code{UMAP1}, and \code{UMAP2}.}
 
 \item{assay_name}{Optional assay name for \code{SingleCellExperiment} or \code{Seurat}.}
 
-\item{expression_layer}{Optional Seurat layer/slot name.}
+\item{expression_layer}{Optional Seurat layer or slot name.}
 
 \item{signatures}{Optional named list of custom signatures.}
 
 \item{marker_panels}{Optional named list of custom marker panels.}
-
-\item{lineage_mapping}{Optional data frame with \code{pattern} and \code{lineage}.}
 
 \item{lr_pairs}{Optional data frame with \code{ligand}, \code{receptor}, and \code{pathway}.}
 }
@@ -53,5 +43,14 @@ object.}
 An object of class \code{scdown_obj}.
 }
 \description{
-Create a \code{scdown} object
+\code{scdown()} standardizes annotation-after single-cell inputs into a compact
+object for cluster interpretation within one dataset. Supported inputs are:
+}
+\details{
+\itemize{
+\item a long table with \code{cell}, \code{gene}, and \code{value}
+\item a list with \code{expr}, \code{cells}, and optional \code{embedding}
+\item a \code{SingleCellExperiment}
+\item a \code{Seurat} object
+}
 }

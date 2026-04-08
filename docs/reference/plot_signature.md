@@ -1,11 +1,11 @@
-# Plot signature scores
+# Plot signature or pathway scores
 
-Plot signature scores
+Plot signature or pathway scores
 
 ## Usage
 
 ``` r
-plot_signature(obj, signatures, signature_sets = NULL, outdir = NULL)
+plot_signature(obj, signatures = NULL, signature_sets = NULL, outdir = NULL)
 ```
 
 ## Arguments
@@ -16,11 +16,12 @@ plot_signature(obj, signatures, signature_sets = NULL, outdir = NULL)
 
 - signatures:
 
-  Character vector of signature names or a named list of signatures.
+  Character vector of built-in signature names or a named list of
+  signatures.
 
 - signature_sets:
 
-  Optional named list of custom signatures to merge with built-ins.
+  Optional named list of custom signatures.
 
 - outdir:
 
@@ -28,4 +29,4 @@ plot_signature(obj, signatures, signature_sets = NULL, outdir = NULL)
 
 ## Value
 
-A list with signature tables and plots.
+A list with signature tables and plot paths.

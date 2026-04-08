@@ -1,23 +1,22 @@
 # Create a `scdown` object
 
-Create a `scdown` object
+`scdown()` standardizes annotation-after single-cell inputs into a
+compact object for cluster interpretation within one dataset. Supported
+inputs are:
 
 ## Usage
 
 ``` r
 scdown(
   x,
-  annotation_col = "cell_type",
+  annotation_col = "annotation",
   sample_col = "sample",
-  group_col = "group",
-  batch_col = NULL,
   reduced_dim = "UMAP",
   embedding = NULL,
   assay_name = NULL,
   expression_layer = NULL,
   signatures = NULL,
   marker_panels = NULL,
-  lineage_mapping = NULL,
   lr_pairs = NULL
 )
 ```
@@ -26,33 +25,24 @@ scdown(
 
 - x:
 
-  A long-format expression table, a list with `expr`, optional `cells`,
-  and optional `embedding`, or a `SingleCellExperiment` / `Seurat`
-  object.
+  Input data.
 
 - annotation_col:
 
-  Cell annotation column name.
+  Column containing cluster or annotation labels.
 
 - sample_col:
 
-  Sample column name.
-
-- group_col:
-
-  Optional group column name.
-
-- batch_col:
-
-  Optional batch column name.
+  Optional column containing sample identifiers.
 
 - reduced_dim:
 
-  Name of the reduced dimension to use.
+  Reduced-dimension name used when extracting embeddings from
+  Bioconductor or Seurat objects.
 
 - embedding:
 
-  Optional embedding data frame with `cell`, `UMAP1`, `UMAP2`.
+  Optional data frame with `cell`, `UMAP1`, and `UMAP2`.
 
 - assay_name:
 
@@ -60,7 +50,7 @@ scdown(
 
 - expression_layer:
 
-  Optional Seurat layer/slot name.
+  Optional Seurat layer or slot name.
 
 - signatures:
 
@@ -70,10 +60,6 @@ scdown(
 
   Optional named list of custom marker panels.
 
-- lineage_mapping:
-
-  Optional data frame with `pattern` and `lineage`.
-
 - lr_pairs:
 
   Optional data frame with `ligand`, `receptor`, and `pathway`.
@@ -81,3 +67,13 @@ scdown(
 ## Value
 
 An object of class `scdown_obj`.
+
+## Details
+
+- a long table with `cell`, `gene`, and `value`
+
+- a list with `expr`, `cells`, and optional `embedding`
+
+- a `SingleCellExperiment`
+
+- a `Seurat` object

@@ -1,13 +1,11 @@
 .assert_columns <- function(x, required, what = "data") {
   miss <- setdiff(required, names(x))
   if (length(miss) > 0L) {
-    stop(sprintf("`%s` is missing required columns: %s.", what, paste(miss, collapse = ", ")), call. = FALSE)
+    stop(
+      sprintf("`%s` is missing required columns: %s.", what, paste(miss, collapse = ", ")),
+      call. = FALSE
+    )
   }
-}
-
-.existing_columns <- function(x, cols) {
-  cols <- cols[!is.na(cols) & nzchar(cols)]
-  cols[cols %in% names(x)]
 }
 
 .factor_info <- function(x) {
@@ -16,18 +14,20 @@
   list(index = as.integer(fac), levels = vals)
 }
 
-.safe_mean <- function(x) {
-  if (!length(x)) {
-    return(NA_real_)
-  }
-  mean(x, na.rm = TRUE)
-}
-
 .dir_create <- function(path) {
   if (!is.null(path) && !dir.exists(path)) {
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
   }
   invisible(path)
+}
+
+.subdir_or_null <- function(outdir, name) {
+  if (is.null(outdir)) {
+    return(NULL)
+  }
+  path <- file.path(outdir, name)
+  .dir_create(path)
+  path
 }
 
 .write_tables <- function(tables, outdir) {
@@ -209,41 +209,17 @@
   stats::setNames(as.numeric(score), colnames(mat))
 }
 
-.group_test <- function(values, groups) {
-  keep <- is.finite(values) & !is.na(groups)
-  values <- values[keep]
-  groups <- as.character(groups[keep])
-  lev <- unique(groups)
-  if (length(lev) < 2L) {
-    return(list(method = "insufficient_groups", p_value = NA_real_, effect = NA_real_, note = "need at least two groups"))
-  }
-  sample_counts <- table(groups)
-  if (any(sample_counts < 2L)) {
-    return(list(method = "insufficient_replicates", p_value = NA_real_, effect = NA_real_, note = "need at least two samples per group"))
-  }
-  group_means <- tapply(values, groups, mean, na.rm = TRUE)
-  effect <- max(group_means) - min(group_means)
-  if (!is.finite(effect) || effect == 0 || stats::var(values) == 0) {
-    method <- if (length(lev) == 2L) "wilcox" else "kruskal"
-    return(list(method = method, p_value = 1, effect = 0, note = "no variation between groups"))
-  }
-  if (length(lev) == 2L) {
-    p_value <- tryCatch(stats::wilcox.test(values ~ factor(groups), exact = FALSE)$p.value, error = function(e) NA_real_)
-    return(list(method = "wilcox", p_value = p_value, effect = effect, note = ""))
-  }
-  p_value <- tryCatch(stats::kruskal.test(values ~ factor(groups))$p.value, error = function(e) NA_real_)
-  list(method = "kruskal", p_value = p_value, effect = effect, note = "")
-}
-
-.standardize_cells <- function(cells, cell_names, sample_col, annotation_col, group_col, batch_col) {
+.standardize_cells <- function(cells, cell_names, sample_col, annotation_col) {
   cells <- as.data.frame(cells, stringsAsFactors = FALSE)
   if (!"cell" %in% names(cells)) {
     cells$cell <- rownames(cells) %||% cell_names
   }
   cells$cell <- as.character(cells$cell)
+  if (!sample_col %in% names(cells)) {
+    cells[[sample_col]] <- "sample_1"
+  }
   .assert_columns(cells, c("cell", sample_col, annotation_col), "cells")
-  keep <- .existing_columns(cells, c("cell", sample_col, annotation_col, group_col, batch_col))
-  cells <- cells[, unique(keep), drop = FALSE]
+  cells <- cells[, unique(c("cell", sample_col, annotation_col)), drop = FALSE]
   miss <- setdiff(cell_names, cells$cell)
   if (length(miss)) {
     stop("Cell metadata is missing rows for some expression columns.", call. = FALSE)
@@ -253,31 +229,27 @@
   cells
 }
 
-.matrix_to_long_subset <- function(raw_mat, analysis_mat, genes, cells, sample_col, annotation_col) {
-  hit <- intersect(genes, rownames(raw_mat))
-  if (!length(hit)) {
-    return(data.frame(
-      cell = character(),
-      sample = character(),
-      cell_type = character(),
-      gene = character(),
-      value = numeric(),
-      analysis_value = numeric(),
-      stringsAsFactors = FALSE
-    ))
+.image_heatmap <- function(mat, main = "") {
+  mat <- as.matrix(mat)
+  if (!length(mat)) {
+    return(.plot_message("No data"))
   }
-  out <- lapply(hit, function(gene) {
-    data.frame(
-      cell = colnames(raw_mat),
-      sample = cells[[sample_col]],
-      cell_type = cells[[annotation_col]],
-      gene = gene,
-      value = as.numeric(raw_mat[gene, ]),
-      analysis_value = as.numeric(analysis_mat[gene, ]),
-      stringsAsFactors = FALSE
-    )
-  })
-  do.call(rbind, out)
+  nr <- nrow(mat)
+  nc <- ncol(mat)
+  z <- t(mat[nr:1, , drop = FALSE])
+  graphics::image(
+    x = seq_len(nc),
+    y = seq_len(nr),
+    z = z,
+    col = grDevices::hcl.colors(64, "YlOrRd", rev = TRUE),
+    axes = FALSE,
+    xlab = "",
+    ylab = "",
+    main = main
+  )
+  graphics::axis(1, at = seq_len(nc), labels = colnames(mat), las = 2, cex.axis = 0.7)
+  graphics::axis(2, at = seq_len(nr), labels = rev(rownames(mat)), las = 2, cex.axis = 0.7)
+  graphics::box()
 }
 
 `%||%` <- function(x, y) {

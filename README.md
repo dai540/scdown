@@ -5,37 +5,36 @@
 [![Latest release](https://img.shields.io/github/v/release/dai540/scdown?display_name=tag)](https://github.com/dai540/scdown/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/dai540/scdown/blob/main/LICENSE.txt)
 
-`scdown` is a simple downstream toolkit for annotated single-cell RNA-seq data.
+`scdown` is a minimal downstream toolkit for annotated single-cell RNA-seq.
 
-It is best used **after** QC, normalization, embedding, clustering, and cell
-annotation. In other words, `scdown` is a downstream hub, not a full upstream
-single-cell framework.
+It is built for the common case where you already have clusters or cell-type
+labels and want to understand structure within one dataset without introducing
+group- or replicate-aware inference.
 
-## What `scdown` is for
+## What `scdown` does
 
-- make one downstream analysis object
-- run fast exploratory summaries
-- run sample-aware tests only when you need them
-- export a compact HTML report for review and collaboration
+- show cluster or annotation maps
+- extract marker genes
+- check annotations with known marker panels
+- summarize average expression by cluster
+- inspect cluster similarity
+- score signatures or pathways
+- rank exploratory ligand-receptor interactions
+- build a compact HTML report
 
-## What `scdown` is not for
+## What `scdown` does not do
 
-- droplet QC or ambient RNA correction
-- normalization, HVG selection, integration, clustering, or trajectory fitting
-- publication-grade differential state as a primary specialist method
+- QC, ambient RNA correction, doublet detection, normalization, clustering, or integration
+- group-aware differential abundance or differential expression
+- formal communication modeling for publication-grade claims
 
-Those parts are better handled by upstream or specialist tools such as Seurat,
-`scater`, `scuttle`, `scran`, `SingleR`, `muscat`, `dreamlet`, `miloR`, and
-CellChat.
-
-Internally, `scdown` keeps data in a sparse-first matrix form, so it no longer
-needs to expand everything into a huge long table before analysis.
+Use Seurat, `scater`, `scuttle`, `scran`, `SingleR`, `muscat`, `dreamlet`,
+`miloR`, or CellChat for those stages.
 
 ## Website
 
 - Home: [https://dai540.github.io/scdown/](https://dai540.github.io/scdown/)
 - Getting started: [https://dai540.github.io/scdown/articles/getting-started.html](https://dai540.github.io/scdown/articles/getting-started.html)
-- Recommended pipeline: [https://dai540.github.io/scdown/articles/recommended-pipeline.html](https://dai540.github.io/scdown/articles/recommended-pipeline.html)
 - Reference: [https://dai540.github.io/scdown/reference/index.html](https://dai540.github.io/scdown/reference/index.html)
 - News: [https://dai540.github.io/scdown/news/index.html](https://dai540.github.io/scdown/news/index.html)
 
@@ -46,134 +45,60 @@ install.packages("pak")
 pak::pak("dai540/scdown")
 ```
 
-## Citation
+## Inputs
 
-GitHub can read [CITATION.cff](https://github.com/dai540/scdown/blob/main/CITATION.cff),
-and R can read `citation("scdown")` from the package.
+`scdown()` accepts:
 
-## Example
+- a long-format table with `cell`, `gene`, `value`, and annotation columns
+- a list with `expr`, `cells`, and optional `embedding`
+- a `SingleCellExperiment`
+- a `Seurat` object
+
+The minimal metadata columns are:
+
+- `cell`
+- `annotation`
+- `sample` if available
+
+## Minimal workflow
 
 ```r
 library(scdown)
 
-obj <- scdown(scdown_example())
-
-run_core(obj)
-build_scdown_report(obj)
-```
-
-## Explore
-
-```r
-plot_map(obj)
-explore_markers(obj)
-plot_gene(obj, genes = c("CD3D", "NKG7", "LYZ"))
-plot_composition(obj)
-plot_signature(obj, signatures = c("cytotoxic", "exhaustion"))
-infer_communication(obj)
-```
-
-## Test
-
-```r
-test_markers(obj)
-test_composition(obj)
-test_signature(obj, signatures = c("cytotoxic", "b_cell"))
-test_communication(obj, n_perm = 25)
-```
-
-## Recommended positioning
-
-```r
-scope_table("generic")
-recommended_pipeline("generic")
-recommended_pipeline("pbmc")
-recommended_pipeline("tumor_immune")
-recommended_pipeline("patient_comparison")
-```
-
-## Specialist handoff
-
-If an endpoint becomes central enough for publication-grade modeling, prepare a
-handoff object instead of stretching `scdown` beyond its intended scope.
-
-```r
-muscat_input <- export_for_handoff(obj, target = "muscat")
-dreamlet_input <- export_for_handoff(obj, target = "dreamlet")
-milor_input <- export_for_handoff(obj, target = "miloR")
-cellchat_input <- export_for_handoff(obj, target = "CellChat")
-```
-
-`build_scdown_report()` also includes a scope and handoff section, plus marker
-and communication tests when `run_tests = TRUE`. These built-in tests are for
-screening and prioritization, not a replacement for specialist models.
-
-## Custom resources
-
-```r
-obj_custom <- scdown(
+obj <- scdown(
   scdown_example(),
-  signatures = list(my_state = c("CD3D", "IL7R")),
-  marker_panels = list(my_t_panel = c("CD3D", "TRAC")),
-  lineage_mapping = data.frame(
-    pattern = c("cd4", "cd8", "nk", "b", "mono", "macro"),
-    lineage = c("T/NK", "T/NK", "T/NK", "B/Plasma", "Myeloid", "Myeloid")
-  ),
-  lr_pairs = data.frame(
-    ligand = "CCL5",
-    receptor = "CCR5",
-    pathway = "chemokine"
-  )
+  annotation_col = "annotation",
+  sample_col = "sample"
 )
 
-plot_signature(obj_custom, signatures = "my_state")
-check_annotation(obj_custom, panels = "my_t_panel")
-```
+plot_map(obj)
+find_markers(obj)
+check_annotation(obj)
+plot_average_expression(obj)
+plot_cluster_similarity(obj)
+plot_signature(obj, signatures = c("cytotoxic", "antigen_presentation"))
+infer_communication(obj)
 
-## Direct input
-
-```r
-obj_sce <- scdown(
-  sce,
-  annotation_col = "cell_type",
-  sample_col = "sample",
-  reduced_dim = "UMAP",
-  assay_name = "counts"
-)
-
-obj_seurat <- scdown(
-  seu,
-  annotation_col = "cell_type",
-  sample_col = "sample",
-  reduced_dim = "umap",
-  assay_name = "RNA",
-  expression_layer = "counts"
-)
+build_scdown_report(obj)
 ```
 
 ## Main functions
 
 - `scdown()`
-- `recommended_pipeline()`
-- `scope_table()`
-- `export_for_handoff()`
 - `summarize_dataset()`
-- `collapse_lineage()`
 - `plot_map()`
-- `explore_markers()`
 - `find_markers()`
-- `plot_gene()`
-- `plot_composition()`
-- `explore_composition()`
 - `check_annotation()`
+- `plot_average_expression()`
+- `plot_cluster_similarity()`
 - `plot_signature()`
-- `explore_signature()`
-- `plot_heatmap()`
 - `infer_communication()`
-- `explore_communication()`
-- `test_markers()`
-- `test_composition()`
-- `test_signature()`
-- `test_communication()`
 - `run_core()`
 - `build_scdown_report()`
+
+## Built-in resources
+
+- `immune_signatures()`
+- `immune_marker_panels()`
+- `list_signatures()`
+- `get_signature()`

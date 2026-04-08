@@ -1,3 +1,10 @@
+# scdown 0.5.0
+
+- simplified the package to annotation-after, within-dataset downstream analysis
+- removed group-aware tests, handoff helpers, composition summaries, and pipeline guidance
+- focused the API on maps, markers, marker-panel annotation checks, average expression, cluster similarity, signature scoring, exploratory communication, and compact reporting
+- cleaned the documentation, vignette, tests, and generated site around the smaller scope
+
 # scdown 0.4.2
 
 - fixed the GitHub release workflow by installing vignette-building dependencies before `R CMD build`

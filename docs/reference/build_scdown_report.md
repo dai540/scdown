@@ -7,11 +7,10 @@ Build a compact HTML report
 ``` r
 build_scdown_report(
   obj,
-  genes = c("CD3D", "NKG7", "LYZ", "MS4A1"),
-  signatures = c("cytotoxic", "exhaustion", "antigen_presentation"),
+  signatures = c("cytotoxic", "antigen_presentation"),
+  panels = c("t_cell", "nk", "b_cell", "monocyte", "macrophage", "dendritic"),
   signature_sets = NULL,
-  run_tests = TRUE,
-  scenario = c("generic", "pbmc", "tumor_immune", "patient_comparison"),
+  marker_panels = NULL,
   outdir = tempfile("scdown-report-")
 )
 ```
@@ -22,27 +21,23 @@ build_scdown_report(
 
   A `scdown_obj`.
 
-- genes:
-
-  User-selected genes.
-
 - signatures:
 
-  User-selected signatures.
+  Character vector of built-in signature names or a named list of
+  signatures.
+
+- panels:
+
+  Character vector of built-in marker panel names or a named list of
+  marker panels.
 
 - signature_sets:
 
-  Optional custom signatures.
+  Optional named list of custom signatures.
 
-- run_tests:
+- marker_panels:
 
-  Whether to include lightweight tests and, when possible, sample-aware
-  tests.
-
-- scenario:
-
-  One of `"generic"`, `"pbmc"`, `"tumor_immune"`, or
-  `"patient_comparison"`. Used for the scope and handoff section.
+  Optional named list of custom marker panels.
 
 - outdir:
 
@@ -50,4 +45,4 @@ build_scdown_report(
 
 ## Value
 
-Path to the generated HTML file.
+Path to the generated HTML report.

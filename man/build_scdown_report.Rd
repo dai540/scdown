@@ -6,33 +6,30 @@
 \usage{
 build_scdown_report(
   obj,
-  genes = c("CD3D", "NKG7", "LYZ", "MS4A1"),
-  signatures = c("cytotoxic", "exhaustion", "antigen_presentation"),
+  signatures = c("cytotoxic", "antigen_presentation"),
+  panels = c("t_cell", "nk", "b_cell", "monocyte", "macrophage", "dendritic"),
   signature_sets = NULL,
-  run_tests = TRUE,
-  scenario = c("generic", "pbmc", "tumor_immune", "patient_comparison"),
+  marker_panels = NULL,
   outdir = tempfile("scdown-report-")
 )
 }
 \arguments{
 \item{obj}{A \code{scdown_obj}.}
 
-\item{genes}{User-selected genes.}
+\item{signatures}{Character vector of built-in signature names or a named
+list of signatures.}
 
-\item{signatures}{User-selected signatures.}
+\item{panels}{Character vector of built-in marker panel names or a named list
+of marker panels.}
 
-\item{signature_sets}{Optional custom signatures.}
+\item{signature_sets}{Optional named list of custom signatures.}
 
-\item{run_tests}{Whether to include lightweight tests and, when possible,
-sample-aware tests.}
-
-\item{scenario}{One of \code{"generic"}, \code{"pbmc"}, \code{"tumor_immune"}, or
-\code{"patient_comparison"}. Used for the scope and handoff section.}
+\item{marker_panels}{Optional named list of custom marker panels.}
 
 \item{outdir}{Output directory.}
 }
 \value{
-Path to the generated HTML file.
+Path to the generated HTML report.
 }
 \description{
 Build a compact HTML report

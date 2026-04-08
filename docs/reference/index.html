@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,6 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -37,7 +36,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="object">Object<a class="anchor" aria-label="anchor" href="#object"></a></h2>
+      <h2 id="object-and-workflow">Object and workflow<a class="anchor" aria-label="anchor" href="#object-and-workflow"></a></h2>
 
 
 
@@ -55,27 +54,6 @@
 
         <dt>
 
-          <code><a href="recommended_pipeline.html">recommended_pipeline()</a></code>
-
-        </dt>
-        <dd>Recommended Pipeline Around <code>scdown</code></dd>
-
-        <dt>
-
-          <code><a href="scope_table.html">scope_table()</a></code>
-
-        </dt>
-        <dd>Scope table for <code>scdown</code></dd>
-
-        <dt>
-
-          <code><a href="export_for_handoff.html">export_for_handoff()</a></code>
-
-        </dt>
-        <dd>Export <code>scdown</code> data for specialist handoff</dd>
-
-        <dt>
-
           <code><a href="scdown_example.html">scdown_example()</a></code>
 
         </dt>
@@ -90,10 +68,10 @@
 
         <dt>
 
-          <code><a href="collapse_lineage.html">collapse_lineage()</a></code>
+          <code><a href="run_core.html">run_core()</a></code>
 
         </dt>
-        <dd>Collapse fine labels into major lineages</dd>
+        <dd>Run the minimal downstream workflow</dd>
 
         <dt>
 
@@ -101,15 +79,8 @@
 
         </dt>
         <dd>Build a compact HTML report</dd>
-
-        <dt>
-
-          <code><a href="run_core.html">run_core()</a></code>
-
-        </dt>
-        <dd>Run the core downstream workflow</dd>
       </dl></div><div class="section level2">
-      <h2 id="explore">Explore<a class="anchor" aria-label="anchor" href="#explore"></a></h2>
+      <h2 id="downstream-analysis">Downstream analysis<a class="anchor" aria-label="anchor" href="#downstream-analysis"></a></h2>
 
 
 
@@ -123,70 +94,42 @@
           <code><a href="plot_map.html">plot_map()</a></code>
 
         </dt>
-        <dd>Plot cell map</dd>
-
-        <dt>
-
-          <code><a href="explore_markers.html">explore_markers()</a></code>
-
-        </dt>
-        <dd>Explore cell-type markers</dd>
+        <dd>Plot cluster or annotation maps</dd>
 
         <dt>
 
           <code><a href="find_markers.html">find_markers()</a></code>
 
         </dt>
-        <dd>Find cell-type markers</dd>
-
-        <dt>
-
-          <code><a href="plot_gene.html">plot_gene()</a></code>
-
-        </dt>
-        <dd>Plot user-selected genes</dd>
-
-        <dt>
-
-          <code><a href="plot_composition.html">plot_composition()</a></code>
-
-        </dt>
-        <dd>Plot composition summaries</dd>
-
-        <dt>
-
-          <code><a href="explore_composition.html">explore_composition()</a></code>
-
-        </dt>
-        <dd>Explore composition summaries</dd>
+        <dd>Find marker genes for each annotation</dd>
 
         <dt>
 
           <code><a href="check_annotation.html">check_annotation()</a></code>
 
         </dt>
-        <dd>Check annotation with marker panels</dd>
+        <dd>Check annotation with known marker panels</dd>
+
+        <dt>
+
+          <code><a href="plot_average_expression.html">plot_average_expression()</a></code>
+
+        </dt>
+        <dd>Plot average expression by annotation</dd>
+
+        <dt>
+
+          <code><a href="plot_cluster_similarity.html">plot_cluster_similarity()</a></code>
+
+        </dt>
+        <dd>Plot similarity between annotations</dd>
 
         <dt>
 
           <code><a href="plot_signature.html">plot_signature()</a></code>
 
         </dt>
-        <dd>Plot signature scores</dd>
-
-        <dt>
-
-          <code><a href="explore_signature.html">explore_signature()</a></code>
-
-        </dt>
-        <dd>Explore signature scores</dd>
-
-        <dt>
-
-          <code><a href="plot_heatmap.html">plot_heatmap()</a></code>
-
-        </dt>
-        <dd>Plot expression heatmaps</dd>
+        <dd>Plot signature or pathway scores</dd>
 
         <dt>
 
@@ -194,52 +137,8 @@
 
         </dt>
         <dd>Infer exploratory cell-cell communication</dd>
-
-        <dt>
-
-          <code><a href="explore_communication.html">explore_communication()</a></code>
-
-        </dt>
-        <dd>Explore cell-cell communication</dd>
       </dl></div><div class="section level2">
-      <h2 id="test">Test<a class="anchor" aria-label="anchor" href="#test"></a></h2>
-
-
-
-      <dl></dl></div><div class="section level2">
-
-
-
-
-      <dl><dt>
-
-          <code><a href="test_markers.html">test_markers()</a></code>
-
-        </dt>
-        <dd>Test markers with lightweight per-cell Wilcoxon statistics</dd>
-
-        <dt>
-
-          <code><a href="test_composition.html">test_composition()</a></code>
-
-        </dt>
-        <dd>Test composition differences across groups</dd>
-
-        <dt>
-
-          <code><a href="test_signature.html">test_signature()</a></code>
-
-        </dt>
-        <dd>Test signature differences across groups</dd>
-
-        <dt>
-
-          <code><a href="test_communication.html">test_communication()</a></code>
-
-        </dt>
-        <dd>Test communication scores by permutation</dd>
-      </dl></div><div class="section level2">
-      <h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a></h2>
+      <h2 id="built-in-resources">Built-in resources<a class="anchor" aria-label="anchor" href="#built-in-resources"></a></h2>
 
 
 
@@ -261,13 +160,6 @@
 
         </dt>
         <dd>Built-in immune marker panels</dd>
-
-        <dt>
-
-          <code><a href="default_lineage_mapping.html">default_lineage_mapping()</a></code>
-
-        </dt>
-        <dd>Default lineage mapping</dd>
 
         <dt>
 

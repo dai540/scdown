@@ -1,5 +1,17 @@
 # Changelog
 
+## scdown 0.5.0
+
+- simplified the package to annotation-after, within-dataset downstream
+  analysis
+- removed group-aware tests, handoff helpers, composition summaries, and
+  pipeline guidance
+- focused the API on maps, markers, marker-panel annotation checks,
+  average expression, cluster similarity, signature scoring, exploratory
+  communication, and compact reporting
+- cleaned the documentation, vignette, tests, and generated site around
+  the smaller scope
+
 ## scdown 0.4.2
 
 - fixed the GitHub release workflow by installing vignette-building
@@ -23,13 +35,10 @@
 
 ## scdown 0.4.0
 
-- added
-  [`scope_table()`](https://dai540.github.io/scdown/reference/scope_table.md)
-  to make the intended boundary of `scdown` explicit
-- added
-  [`export_for_handoff()`](https://dai540.github.io/scdown/reference/export_for_handoff.md)
-  to prepare objects for `muscat`, `dreamlet`, `miloR`, and CellChat
-  workflows
+- added `scope_table()` to make the intended boundary of `scdown`
+  explicit
+- added `export_for_handoff()` to prepare objects for `muscat`,
+  `dreamlet`, `miloR`, and CellChat workflows
 - expanded
   [`build_scdown_report()`](https://dai540.github.io/scdown/reference/build_scdown_report.md)
   with scope guidance plus marker and communication test sections

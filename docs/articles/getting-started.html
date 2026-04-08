@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,6 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
@@ -66,760 +65,156 @@
 
     
     
-<p><code>scdown</code> stays intentionally short:</p>
-<ol style="list-style-type: decimal">
-<li>build one <code>scdown</code> object</li>
-<li>run quick exploratory summaries</li>
-<li>run sample-aware tests only when needed</li>
-</ol>
+<p><code>scdown</code> is for annotation-after downstream analysis
+inside one dataset.</p>
+<p>The package assumes that clustering and annotation are already done.
+The core questions are:</p>
+<ul>
+<li>what clusters are present on the embedding?</li>
+<li>which genes define each cluster?</li>
+<li>do known marker panels support the annotation?</li>
+<li>which clusters are transcriptionally similar?</li>
+<li>which signatures or pathways are active?</li>
+<li>which ligand-receptor pairs are plausible?</li>
+</ul>
 <div class="section level2">
-<h2 id="build-an-object">Build an object<a class="anchor" aria-label="anchor" href="#build-an-object"></a>
+<h2 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdown.html">scdown</a></span><span class="op">(</span><span class="fu"><a href="../reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dai540.github.io/scdown/">scdown</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">example_data</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ expr     :Formal class 'dgCMatrix' [package "Matrix"] with 6 slots</span></span>
+<span><span class="co">#&gt;  $ cells    :'data.frame':   108 obs. of  3 variables:</span></span>
+<span><span class="co">#&gt;  $ embedding:'data.frame':   108 obs. of  3 variables:</span></span></code></pre></div>
+<p>The example object contains:</p>
+<ul>
+<li>
+<code>cells</code>: one row per cell with <code>cell</code>,
+<code>sample</code>, and <code>annotation</code>
+</li>
+<li>
+<code>embedding</code>: two-dimensional coordinates</li>
+<li>
+<code>expr</code>: a sparse count matrix</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="create-a-scdown-object">Create a <code>scdown</code> object<a class="anchor" aria-label="anchor" href="#create-a-scdown-object"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdown.html">scdown</a></span><span class="op">(</span></span>
+<span>  <span class="va">example_data</span>,</span>
+<span>  annotation_col <span class="op">=</span> <span class="st">"annotation"</span>,</span>
+<span>  sample_col <span class="op">=</span> <span class="st">"sample"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">obj</span></span>
 <span><span class="co">#&gt; &lt;scdown_obj&gt;</span></span>
-<span><span class="co">#&gt;   cells: 48 </span></span>
-<span><span class="co">#&gt;   genes: 15 </span></span>
-<span><span class="co">#&gt;   samples: 4 </span></span>
+<span><span class="co">#&gt;   cells: 108 </span></span>
+<span><span class="co">#&gt;   genes: 21 </span></span>
 <span><span class="co">#&gt;   annotations: 6 </span></span>
+<span><span class="co">#&gt;   samples: 3 </span></span>
 <span><span class="co">#&gt;   value type: counts</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="explore">Explore<a class="anchor" aria-label="anchor" href="#explore"></a>
+<h2 id="run-the-minimal-downstream-workflow">Run the minimal downstream workflow<a class="anchor" aria-label="anchor" href="#run-the-minimal-downstream-workflow"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">map_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="va">marker_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/explore_markers.html">explore_markers</a></span><span class="op">(</span><span class="va">obj</span>, top_n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">gene_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_gene.html">plot_gene</a></span><span class="op">(</span><span class="va">obj</span>, genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"NKG7"</span>, <span class="st">"LYZ"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">sig_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"b_cell"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">map_res</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">embedding_cells</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">cell</th>
-<th align="right">UMAP1</th>
-<th align="right">UMAP2</th>
-<th align="left">sample</th>
-<th align="left">cell_type</th>
-<th align="left">group</th>
-<th align="left">lineage</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">cell_1</td>
-<td align="right">-2.43</td>
-<td align="right">2.1</td>
-<td align="left">S1</td>
-<td align="left">CD4_T</td>
-<td align="left">control</td>
-<td align="left">T/NK</td>
-</tr>
-<tr class="even">
-<td align="left">cell_2</td>
-<td align="right">-2.07</td>
-<td align="right">1.9</td>
-<td align="left">S2</td>
-<td align="left">CD4_T</td>
-<td align="left">control</td>
-<td align="left">T/NK</td>
-</tr>
-<tr class="odd">
-<td align="left">cell_3</td>
-<td align="right">-2.16</td>
-<td align="right">2.1</td>
-<td align="left">S3</td>
-<td align="left">CD4_T</td>
-<td align="left">case</td>
-<td align="left">T/NK</td>
-</tr>
-<tr class="even">
-<td align="left">cell_4</td>
-<td align="right">-1.90</td>
-<td align="right">1.9</td>
-<td align="left">S4</td>
-<td align="left">CD4_T</td>
-<td align="left">case</td>
-<td align="left">T/NK</td>
-</tr>
-<tr class="odd">
-<td align="left">cell_5</td>
-<td align="right">-1.73</td>
-<td align="right">1.5</td>
-<td align="left">S1</td>
-<td align="left">CD8_T</td>
-<td align="left">control</td>
-<td align="left">T/NK</td>
-</tr>
-<tr class="even">
-<td align="left">cell_6</td>
-<td align="right">-1.37</td>
-<td align="right">1.3</td>
-<td align="left">S2</td>
-<td align="left">CD8_T</td>
-<td align="left">control</td>
-<td align="left">T/NK</td>
-</tr>
-</tbody>
-</table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">marker_res</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">top_marker_per_celltype</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="10%">
-<col width="8%">
-<col width="13%">
-<col width="10%">
-<col width="12%">
-<col width="9%">
-<col width="13%">
-<col width="19%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">cell_type</th>
-<th align="left">gene</th>
-<th align="right">mean_in_type</th>
-<th align="right">mean_rest</th>
-<th align="right">pct_in_type</th>
-<th align="right">pct_rest</th>
-<th align="right">marker_score</th>
-<th align="right">marker_table_rank</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">B_cell</td>
-<td align="left">MS4A1</td>
-<td align="right">7.964999</td>
-<td align="right">5.527988</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.437011</td>
-<td align="right">2.437011</td>
-</tr>
-<tr class="even">
-<td align="left">B_cell</td>
-<td align="left">CD79A</td>
-<td align="right">7.893474</td>
-<td align="right">5.528006</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.365468</td>
-<td align="right">2.365468</td>
-</tr>
-<tr class="odd">
-<td align="left">CD4_T</td>
-<td align="left">IL7R</td>
-<td align="right">7.765374</td>
-<td align="right">5.553538</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.211836</td>
-<td align="right">2.211836</td>
-</tr>
-<tr class="even">
-<td align="left">CD4_T</td>
-<td align="left">CD3D</td>
-<td align="right">7.765375</td>
-<td align="right">5.987036</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.778339</td>
-<td align="right">1.778339</td>
-</tr>
-<tr class="odd">
-<td align="left">CD4_T</td>
-<td align="left">CCR5</td>
-<td align="right">7.420032</td>
-<td align="right">6.282412</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.137620</td>
-<td align="right">1.137620</td>
-</tr>
-<tr class="even">
-<td align="left">CD8_T</td>
-<td align="left">CCL5</td>
-<td align="right">7.862159</td>
-<td align="right">5.695226</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.166933</td>
-<td align="right">2.166933</td>
-</tr>
-<tr class="odd">
-<td align="left">CD8_T</td>
-<td align="left">CD3D</td>
-<td align="right">7.732316</td>
-<td align="right">5.993648</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.738669</td>
-<td align="right">1.738669</td>
-</tr>
-<tr class="even">
-<td align="left">CD8_T</td>
-<td align="left">CCR5</td>
-<td align="right">7.386979</td>
-<td align="right">6.289023</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.097956</td>
-<td align="right">1.097956</td>
-</tr>
-<tr class="odd">
-<td align="left">Macro</td>
-<td align="left">C1QC</td>
-<td align="right">7.675544</td>
-<td align="right">5.571430</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.104114</td>
-<td align="right">2.104114</td>
-</tr>
-<tr class="even">
-<td align="left">Macro</td>
-<td align="left">APOE</td>
-<td align="right">7.675544</td>
-<td align="right">5.571436</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.104108</td>
-<td align="right">2.104108</td>
-</tr>
-<tr class="odd">
-<td align="left">Macro</td>
-<td align="left">HLA-DRA</td>
-<td align="right">7.779318</td>
-<td align="right">5.709578</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.069739</td>
-<td align="right">2.069739</td>
-</tr>
-<tr class="even">
-<td align="left">Mono</td>
-<td align="left">CXCL8</td>
-<td align="right">7.571326</td>
-<td align="right">5.592191</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.979135</td>
-<td align="right">1.979135</td>
-</tr>
-<tr class="odd">
-<td align="left">Mono</td>
-<td align="left">FCN1</td>
-<td align="right">7.571327</td>
-<td align="right">5.592244</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.979083</td>
-<td align="right">1.979083</td>
-</tr>
-<tr class="even">
-<td align="left">Mono</td>
-<td align="left">LYZ</td>
-<td align="right">7.571327</td>
-<td align="right">5.592245</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.979081</td>
-<td align="right">1.979081</td>
-</tr>
-<tr class="odd">
-<td align="left">NK</td>
-<td align="left">NKG7</td>
-<td align="right">7.732318</td>
-<td align="right">5.560177</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.172141</td>
-<td align="right">2.172141</td>
-</tr>
-<tr class="even">
-<td align="left">NK</td>
-<td align="left">GNLY</td>
-<td align="right">7.732318</td>
-<td align="right">5.560178</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2.172140</td>
-<td align="right">2.172140</td>
-</tr>
-<tr class="odd">
-<td align="left">NK</td>
-<td align="left">CCR5</td>
-<td align="right">7.386979</td>
-<td align="right">6.289023</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1.097956</td>
-<td align="right">1.097956</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">gene_res</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">gene_average_by_celltype</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">gene</th>
-<th align="left">cell_type</th>
-<th align="right">mean_expression</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">CD3D</td>
-<td align="left">B_cell</td>
-<td align="right">5.725435</td>
-</tr>
-<tr class="even">
-<td align="left">LYZ</td>
-<td align="left">B_cell</td>
-<td align="right">5.725385</td>
-</tr>
-<tr class="odd">
-<td align="left">NKG7</td>
-<td align="left">B_cell</td>
-<td align="right">5.725385</td>
-</tr>
-<tr class="even">
-<td align="left">CD3D</td>
-<td align="left">CD4_T</td>
-<td align="right">7.765375</td>
-</tr>
-<tr class="odd">
-<td align="left">LYZ</td>
-<td align="left">CD4_T</td>
-<td align="right">5.597757</td>
-</tr>
-<tr class="even">
-<td align="left">NKG7</td>
-<td align="left">CD4_T</td>
-<td align="right">5.597757</td>
-</tr>
-<tr class="odd">
-<td align="left">CD3D</td>
-<td align="left">CD8_T</td>
-<td align="right">7.732316</td>
-</tr>
-<tr class="even">
-<td align="left">LYZ</td>
-<td align="left">CD8_T</td>
-<td align="right">5.564884</td>
-</tr>
-<tr class="odd">
-<td align="left">NKG7</td>
-<td align="left">CD8_T</td>
-<td align="right">5.564884</td>
-</tr>
-<tr class="even">
-<td align="left">CD3D</td>
-<td align="left">Macro</td>
-<td align="right">5.508223</td>
-</tr>
-<tr class="odd">
-<td align="left">LYZ</td>
-<td align="left">Macro</td>
-<td align="right">5.508318</td>
-</tr>
-<tr class="even">
-<td align="left">NKG7</td>
-<td align="left">Macro</td>
-<td align="right">5.508318</td>
-</tr>
-<tr class="odd">
-<td align="left">CD3D</td>
-<td align="left">Mono</td>
-<td align="right">5.404446</td>
-</tr>
-<tr class="even">
-<td align="left">LYZ</td>
-<td align="left">Mono</td>
-<td align="right">7.571327</td>
-</tr>
-<tr class="odd">
-<td align="left">NKG7</td>
-<td align="left">Mono</td>
-<td align="right">5.404541</td>
-</tr>
-<tr class="even">
-<td align="left">CD3D</td>
-<td align="left">NK</td>
-<td align="right">5.564760</td>
-</tr>
-<tr class="odd">
-<td align="left">LYZ</td>
-<td align="left">NK</td>
-<td align="right">5.564884</td>
-</tr>
-<tr class="even">
-<td align="left">NKG7</td>
-<td align="left">NK</td>
-<td align="right">7.732318</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">sig_res</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">signature_score_by_celltype</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">signature</th>
-<th align="left">cell_type</th>
-<th align="right">score</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">B_cell</td>
-<td align="right">0.9642857</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">B_cell</td>
-<td align="right">0.4330357</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">CD4_T</td>
-<td align="right">0.3839286</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">CD4_T</td>
-<td align="right">0.4017857</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">CD8_T</td>
-<td align="right">0.3750000</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">CD8_T</td>
-<td align="right">0.4107143</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">Macro</td>
-<td align="right">0.3928571</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">Macro</td>
-<td align="right">0.3928571</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">Mono</td>
-<td align="right">0.3303571</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">Mono</td>
-<td align="right">0.3303571</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell</td>
-<td align="left">NK</td>
-<td align="right">0.3571429</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic</td>
-<td align="left">NK</td>
-<td align="right">0.9642857</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level2">
-<h2 id="test">Test<a class="anchor" aria-label="anchor" href="#test"></a>
-</h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">comp_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test_composition.html">test_composition</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="va">sig_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test_signature.html">test_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"b_cell"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">kable</span><span class="op">(</span><span class="va">comp_test</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">composition_test_table</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="9%">
-<col width="11%">
-<col width="9%">
-<col width="11%">
-<col width="9%">
-<col width="39%">
-<col width="8%">
-</colgroup>
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">feature</th>
-<th align="left">method</th>
-<th align="right">p_value</th>
-<th align="right">effect</th>
-<th align="left">note</th>
-<th align="right">p_adj</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">B_cell</td>
-<td align="left">B_cell</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">CD4_T</td>
-<td align="left">CD4_T</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">CD8_T</td>
-<td align="left">CD8_T</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Macro</td>
-<td align="left">Macro</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Mono</td>
-<td align="left">Mono</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">NK</td>
-<td align="left">NK</td>
-<td align="left">wilcox</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">no variation between groups</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">sig_test</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">signature_test_table</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="16%">
-<col width="9%">
-<col width="9%">
-<col width="6%">
-<col width="9%">
-<col width="9%">
-<col width="27%">
-<col width="9%">
-</colgroup>
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">signature</th>
-<th align="left">cell_type</th>
-<th align="left">method</th>
-<th align="right">p_value</th>
-<th align="right">effect</th>
-<th align="left">note</th>
-<th align="right">p_adj</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">b_cell.B_cell</td>
-<td align="left">b_cell</td>
-<td align="left">B_cell</td>
-<td align="left">wilcox</td>
-<td align="right">1.0000000</td>
-<td align="right">0.0000000</td>
-<td align="left">no variation between groups</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.B_cell</td>
-<td align="left">cytotoxic</td>
-<td align="left">B_cell</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.2589286</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell.CD4_T</td>
-<td align="left">b_cell</td>
-<td align="left">CD4_T</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.3392857</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.CD4_T</td>
-<td align="left">cytotoxic</td>
-<td align="left">CD4_T</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.1964286</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell.CD8_T</td>
-<td align="left">b_cell</td>
-<td align="left">CD8_T</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.3214286</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.CD8_T</td>
-<td align="left">cytotoxic</td>
-<td align="left">CD8_T</td>
-<td align="left">wilcox</td>
-<td align="right">0.6985354</td>
-<td align="right">0.2142857</td>
-<td align="left"></td>
-<td align="right">0.8382424</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell.Macro</td>
-<td align="left">b_cell</td>
-<td align="left">Macro</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.2678571</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.Macro</td>
-<td align="left">cytotoxic</td>
-<td align="left">Macro</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.2678571</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell.Mono</td>
-<td align="left">b_cell</td>
-<td align="left">Mono</td>
-<td align="left">wilcox</td>
-<td align="right">0.6985354</td>
-<td align="right">0.1071429</td>
-<td align="left"></td>
-<td align="right">0.8382424</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.Mono</td>
-<td align="left">cytotoxic</td>
-<td align="left">Mono</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.3750000</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="odd">
-<td align="left">b_cell.NK</td>
-<td align="left">b_cell</td>
-<td align="left">NK</td>
-<td align="left">wilcox</td>
-<td align="right">0.2452781</td>
-<td align="right">0.1964286</td>
-<td align="left"></td>
-<td align="right">0.3679172</td>
-</tr>
-<tr class="even">
-<td align="left">cytotoxic.NK</td>
-<td align="left">cytotoxic</td>
-<td align="left">NK</td>
-<td align="left">wilcox</td>
-<td align="right">1.0000000</td>
-<td align="right">0.0000000</td>
-<td align="left">no variation between groups</td>
-<td align="right">1.0000000</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level2">
-<h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
-</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdown.html">scdown</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"IL7R"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  marker_panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_t_panel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"TRAC"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_core.html">run_core</a></span><span class="op">(</span></span>
+<span>  <span class="va">obj</span>,</span>
+<span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="../reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj_custom</span>, signatures <span class="op">=</span> <span class="st">"my_state"</span><span class="op">)</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">signature_score_by_celltype</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">signature</th>
-<th align="left">cell_type</th>
-<th align="right">score</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">my_state</td>
-<td align="left">B_cell</td>
-<td align="right">0.4241071</td>
-</tr>
-<tr class="even">
-<td align="left">my_state</td>
-<td align="left">CD4_T</td>
-<td align="right">0.9642857</td>
-</tr>
-<tr class="odd">
-<td align="left">my_state</td>
-<td align="left">CD8_T</td>
-<td align="right">0.6562500</td>
-</tr>
-<tr class="even">
-<td align="left">my_state</td>
-<td align="left">Macro</td>
-<td align="right">0.3928571</td>
-</tr>
-<tr class="odd">
-<td align="left">my_state</td>
-<td align="left">Mono</td>
-<td align="right">0.3303571</td>
-</tr>
-<tr class="even">
-<td align="left">my_state</td>
-<td align="left">NK</td>
-<td align="right">0.3571429</td>
-</tr>
-</tbody>
-</table>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "summary"            "map"                "markers"           </span></span>
+<span><span class="co">#&gt; [4] "annotation_check"   "average_expression" "cluster_similarity"</span></span>
+<span><span class="co">#&gt; [7] "signatures"         "communication"</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
+<h2 id="marker-discovery">Marker discovery<a class="anchor" aria-label="anchor" href="#marker-discovery"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">markers</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">top_markers</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   annotation gene  mean_in mean_rest pct_in pct_rest marker_score marker_rank</span></span>
+<span><span class="co">#&gt; 1     B_cell CD74 7.601402  0.000000      1      0.0     7.601402    8.101402</span></span>
+<span><span class="co">#&gt; 2      CD4_T CD3D 7.552637  1.510527      1      0.2     6.042110    6.442110</span></span>
+<span><span class="co">#&gt; 3      CD4_T CCR5 6.860015  2.744006      1      0.4     4.116009    4.416009</span></span>
+<span><span class="co">#&gt; 4      CD8_T PRF1 7.552637  0.000000      1      0.0     7.552637    8.052637</span></span>
+<span><span class="co">#&gt; 5      CD8_T CD3D 7.552637  1.510527      1      0.2     6.042110    6.442110</span></span>
+<span><span class="co">#&gt; 6      CD8_T CCL5 7.552637  1.510527      1      0.2     6.042110    6.442110</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="marker-based-annotation-check">Marker-based annotation check<a class="anchor" aria-label="anchor" href="#marker-based-annotation-check"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">annotation_check</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">annotation_panel_scores</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   annotation score_name  score</span></span>
+<span><span class="co">#&gt; 1     B_cell     b_cell 0.9750</span></span>
+<span><span class="co">#&gt; 2      CD4_T     b_cell 0.5250</span></span>
+<span><span class="co">#&gt; 3      CD8_T     b_cell 0.4750</span></span>
+<span><span class="co">#&gt; 4 Macrophage     b_cell 0.5625</span></span>
+<span><span class="co">#&gt; 5   Monocyte     b_cell 0.4500</span></span>
+<span><span class="co">#&gt; 6         NK     b_cell 0.5250</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="average-expression-and-similarity">Average expression and similarity<a class="anchor" aria-label="anchor" href="#average-expression-and-similarity"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">average_expression</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">average_expression</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   annotation gene mean_expression</span></span>
+<span><span class="co">#&gt; 1      CD4_T CD74        0.000000</span></span>
+<span><span class="co">#&gt; 2      CD4_T CD3D        7.552637</span></span>
+<span><span class="co">#&gt; 3      CD4_T CCR5        6.860015</span></span>
+<span><span class="co">#&gt; 4      CD4_T PRF1        0.000000</span></span>
+<span><span class="co">#&gt; 5      CD4_T CCL5        0.000000</span></span>
+<span><span class="co">#&gt; 6      CD4_T APOE        0.000000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">cluster_similarity</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">cluster_similarity</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   annotation_1 annotation_2 correlation</span></span>
+<span><span class="co">#&gt; 1       B_cell       B_cell  1.00000000</span></span>
+<span><span class="co">#&gt; 2        CD4_T       B_cell  0.41803263</span></span>
+<span><span class="co">#&gt; 3        CD8_T       B_cell -0.03177355</span></span>
+<span><span class="co">#&gt; 4   Macrophage       B_cell  0.60050246</span></span>
+<span><span class="co">#&gt; 5     Monocyte       B_cell  0.57845072</span></span>
+<span><span class="co">#&gt; 6           NK       B_cell  0.41803263</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="signature-scoring">Signature scoring<a class="anchor" aria-label="anchor" href="#signature-scoring"></a>
+</h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">signatures</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">signature_score_by_annotation</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   annotation           score_name  score</span></span>
+<span><span class="co">#&gt; 1     B_cell antigen_presentation 0.8750</span></span>
+<span><span class="co">#&gt; 2      CD4_T antigen_presentation 0.2375</span></span>
+<span><span class="co">#&gt; 3      CD8_T antigen_presentation 0.1750</span></span>
+<span><span class="co">#&gt; 4 Macrophage antigen_presentation 0.5625</span></span>
+<span><span class="co">#&gt; 5   Monocyte antigen_presentation 0.4125</span></span>
+<span><span class="co">#&gt; 6         NK antigen_presentation 0.2375</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="exploratory-communication">Exploratory communication<a class="anchor" aria-label="anchor" href="#exploratory-communication"></a>
+</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">communication</span><span class="op">$</span><span class="va">tables</span><span class="op">$</span><span class="va">communication_pair_summary</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     sender receiver     score</span></span>
+<span><span class="co">#&gt; 1    CD8_T    CD4_T 24.869376</span></span>
+<span><span class="co">#&gt; 2 Monocyte    CD4_T  8.870093</span></span>
+<span><span class="co">#&gt; 3       NK    CD4_T 24.869376</span></span>
+<span><span class="co">#&gt; 4    CD8_T    CD8_T 24.869376</span></span>
+<span><span class="co">#&gt; 5 Monocyte    CD8_T  8.870093</span></span>
+<span><span class="co">#&gt; 6       NK    CD8_T 24.869376</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="build-a-compact-report">Build a compact report<a class="anchor" aria-label="anchor" href="#build-a-compact-report"></a>
 </h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">report_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="va">report_path</span></span>
-<span><span class="co">#&gt; [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpSg9BgS\\scdown-report-269c26082377/scdown_report.html"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpcvVWS0\\scdown-report-2b943846528f/scdown_report.html"</span></span></code></pre></div>
+<p>The report writes one HTML file plus CSV and PNG artifacts for each
+section.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

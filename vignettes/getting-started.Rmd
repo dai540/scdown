@@ -7,69 +7,96 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 8,
-  fig.height = 6
-)
-library(scdown)
-library(knitr)
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-`scdown` stays intentionally short:
+`scdown` is for annotation-after downstream analysis inside one dataset.
 
-1. build one `scdown` object
-2. run quick exploratory summaries
-3. run sample-aware tests only when needed
+The package assumes that clustering and annotation are already done. The core
+questions are:
 
-## Build an object
+- what clusters are present on the embedding?
+- which genes define each cluster?
+- do known marker panels support the annotation?
+- which clusters are transcriptionally similar?
+- which signatures or pathways are active?
+- which ligand-receptor pairs are plausible?
+
+## Example data
 
 ```{r}
-obj <- scdown(scdown_example())
+library(scdown)
+
+example_data <- scdown_example()
+str(example_data, max.level = 1)
+```
+
+The example object contains:
+
+- `cells`: one row per cell with `cell`, `sample`, and `annotation`
+- `embedding`: two-dimensional coordinates
+- `expr`: a sparse count matrix
+
+## Create a `scdown` object
+
+```{r}
+obj <- scdown(
+  example_data,
+  annotation_col = "annotation",
+  sample_col = "sample"
+)
+
 obj
 ```
 
-## Explore
+## Run the minimal downstream workflow
 
 ```{r}
-map_res <- plot_map(obj)
-marker_res <- explore_markers(obj, top_n = 3)
-gene_res <- plot_gene(obj, genes = c("CD3D", "NKG7", "LYZ"))
-sig_res <- plot_signature(obj, signatures = c("cytotoxic", "b_cell"))
-
-kable(head(map_res$tables$embedding_cells, 6))
-kable(marker_res$tables$top_marker_per_celltype)
-kable(gene_res$tables$gene_average_by_celltype)
-kable(sig_res$tables$signature_score_by_celltype)
-```
-
-## Test
-
-```{r}
-comp_test <- test_composition(obj)
-sig_test <- test_signature(obj, signatures = c("cytotoxic", "b_cell"))
-
-kable(comp_test$tables$composition_test_table)
-kable(sig_test$tables$signature_test_table)
-```
-
-## Custom resources
-
-```{r}
-obj_custom <- scdown(
-  scdown_example(),
-  signatures = list(my_state = c("CD3D", "IL7R")),
-  marker_panels = list(my_t_panel = c("CD3D", "TRAC"))
+res <- run_core(
+  obj,
+  signatures = c("cytotoxic", "antigen_presentation")
 )
 
-kable(plot_signature(obj_custom, signatures = "my_state")$tables$signature_score_by_celltype)
+names(res)
 ```
 
-## Report
+## Marker discovery
+
+```{r}
+head(res$markers$tables$top_markers)
+```
+
+## Marker-based annotation check
+
+```{r}
+head(res$annotation_check$tables$annotation_panel_scores)
+```
+
+## Average expression and similarity
+
+```{r}
+head(res$average_expression$tables$average_expression)
+head(res$cluster_similarity$tables$cluster_similarity)
+```
+
+## Signature scoring
+
+```{r}
+head(res$signatures$tables$signature_score_by_annotation)
+```
+
+## Exploratory communication
+
+```{r}
+head(res$communication$tables$communication_pair_summary)
+```
+
+## Build a compact report
 
 ```{r}
 report_path <- build_scdown_report(obj)
 report_path
 ```
+
+The report writes one HTML file plus CSV and PNG artifacts for each section.

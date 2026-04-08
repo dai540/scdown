@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="scdown">
-<meta name="description" content="Annotation-after downstream analysis for single-cell RNA-seq.">
-<meta property="og:description" content="Annotation-after downstream analysis for single-cell RNA-seq.">
+<meta name="description" content="Minimal downstream analysis after cell annotation for single-cell RNA-seq.">
+<meta property="og:description" content="Minimal downstream analysis after cell annotation for single-cell RNA-seq.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,6 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">News</a></li>
@@ -57,28 +56,31 @@
 <div class="page-header"><h1 id="scdown">scdown<a class="anchor" aria-label="anchor" href="#scdown"></a>
 </h1></div>
 <p><a href="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://github.com/dai540/scdown/releases" class="external-link"><img src="https://img.shields.io/github/v/release/dai540/scdown?display_name=tag" alt="Latest release"></a> <a href="https://github.com/dai540/scdown/blob/main/LICENSE.txt" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
-<p><code>scdown</code> is a simple downstream toolkit for annotated single-cell RNA-seq data.</p>
-<p>It is best used <strong>after</strong> QC, normalization, embedding, clustering, and cell annotation. In other words, <code>scdown</code> is a downstream hub, not a full upstream single-cell framework.</p>
+<p><code>scdown</code> is a minimal downstream toolkit for annotated single-cell RNA-seq.</p>
+<p>It is built for the common case where you already have clusters or cell-type labels and want to understand structure within one dataset without introducing group- or replicate-aware inference.</p>
 <div class="section level2">
-<h2 id="what-scdown-is-for">What <code>scdown</code> is for<a class="anchor" aria-label="anchor" href="#what-scdown-is-for"></a>
+<h2 id="what-scdown-does">What <code>scdown</code> does<a class="anchor" aria-label="anchor" href="#what-scdown-does"></a>
 </h2>
 <ul>
-<li>make one downstream analysis object</li>
-<li>run fast exploratory summaries</li>
-<li>run sample-aware tests only when you need them</li>
-<li>export a compact HTML report for review and collaboration</li>
+<li>show cluster or annotation maps</li>
+<li>extract marker genes</li>
+<li>check annotations with known marker panels</li>
+<li>summarize average expression by cluster</li>
+<li>inspect cluster similarity</li>
+<li>score signatures or pathways</li>
+<li>rank exploratory ligand-receptor interactions</li>
+<li>build a compact HTML report</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="what-scdown-is-not-for">What <code>scdown</code> is not for<a class="anchor" aria-label="anchor" href="#what-scdown-is-not-for"></a>
+<h2 id="what-scdown-does-not-do">What <code>scdown</code> does not do<a class="anchor" aria-label="anchor" href="#what-scdown-does-not-do"></a>
 </h2>
 <ul>
-<li>droplet QC or ambient RNA correction</li>
-<li>normalization, HVG selection, integration, clustering, or trajectory fitting</li>
-<li>publication-grade differential state as a primary specialist method</li>
+<li>QC, ambient RNA correction, doublet detection, normalization, clustering, or integration</li>
+<li>group-aware differential abundance or differential expression</li>
+<li>formal communication modeling for publication-grade claims</li>
 </ul>
-<p>Those parts are better handled by upstream or specialist tools such as Seurat, <code>scater</code>, <code>scuttle</code>, <code>scran</code>, <code>SingleR</code>, <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, and CellChat.</p>
-<p>Internally, <code>scdown</code> keeps data in a sparse-first matrix form, so it no longer needs to expand everything into a huge long table before analysis.</p>
+<p>Use Seurat, <code>scater</code>, <code>scuttle</code>, <code>scran</code>, <code>SingleR</code>, <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, or CellChat for those stages.</p>
 </div>
 <div class="section level2">
 <h2 id="website">Website<a class="anchor" aria-label="anchor" href="#website"></a>
@@ -87,8 +89,6 @@
 <li>Home: <a href="https://dai540.github.io/scdown/">https://dai540.github.io/scdown/</a>
 </li>
 <li>Getting started: <a href="https://dai540.github.io/scdown/articles/getting-started.html">https://dai540.github.io/scdown/articles/getting-started.html</a>
-</li>
-<li>Recommended pipeline: <a href="https://dai540.github.io/scdown/articles/recommended-pipeline.html">https://dai540.github.io/scdown/articles/recommended-pipeline.html</a>
 </li>
 <li>Reference: <a href="https://dai540.github.io/scdown/reference/index.html">https://dai540.github.io/scdown/reference/index.html</a>
 </li>
@@ -104,133 +104,72 @@
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+<h2 id="inputs">Inputs<a class="anchor" aria-label="anchor" href="#inputs"></a>
 </h2>
-<p>GitHub can read <a href="https://github.com/dai540/scdown/blob/main/CITATION.cff" class="external-link">CITATION.cff</a>, and R can read <code>citation("scdown")</code> from the package.</p>
+<p><code><a href="reference/scdown.html">scdown()</a></code> accepts:</p>
+<ul>
+<li>a long-format table with <code>cell</code>, <code>gene</code>, <code>value</code>, and annotation columns</li>
+<li>a list with <code>expr</code>, <code>cells</code>, and optional <code>embedding</code>
+</li>
+<li>a <code>SingleCellExperiment</code>
+</li>
+<li>a <code>Seurat</code> object</li>
+</ul>
+<p>The minimal metadata columns are:</p>
+<ul>
+<li><code>cell</code></li>
+<li><code>annotation</code></li>
+<li>
+<code>sample</code> if available</li>
+</ul>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="minimal-workflow">Minimal workflow<a class="anchor" aria-label="anchor" href="#minimal-workflow"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dai540.github.io/scdown/">scdown</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span><span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/run_core.html">run_core</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="explore">Explore<a class="anchor" aria-label="anchor" href="#explore"></a>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore_markers.html">explore_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_gene.html">plot_gene</a></span><span class="op">(</span><span class="va">obj</span>, genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"NKG7"</span>, <span class="st">"LYZ"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_composition.html">plot_composition</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"exhaustion"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/infer_communication.html">infer_communication</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="test">Test<a class="anchor" aria-label="anchor" href="#test"></a>
-</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/test_markers.html">test_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/test_composition.html">test_composition</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/test_signature.html">test_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"b_cell"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/test_communication.html">test_communication</a></span><span class="op">(</span><span class="va">obj</span>, n_perm <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="recommended-positioning">Recommended positioning<a class="anchor" aria-label="anchor" href="#recommended-positioning"></a>
-</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/scope_table.html">scope_table</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"generic"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"pbmc"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"tumor_immune"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/recommended_pipeline.html">recommended_pipeline</a></span><span class="op">(</span><span class="st">"patient_comparison"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="specialist-handoff">Specialist handoff<a class="anchor" aria-label="anchor" href="#specialist-handoff"></a>
-</h2>
-<p>If an endpoint becomes central enough for publication-grade modeling, prepare a handoff object instead of stretching <code>scdown</code> beyond its intended scope.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">muscat_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"muscat"</span><span class="op">)</span></span>
-<span><span class="va">dreamlet_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"dreamlet"</span><span class="op">)</span></span>
-<span><span class="va">milor_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"miloR"</span><span class="op">)</span></span>
-<span><span class="va">cellchat_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_for_handoff.html">export_for_handoff</a></span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="st">"CellChat"</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code> also includes a scope and handoff section, plus marker and communication tests when <code>run_tests = TRUE</code>. These built-in tests are for screening and prioritization, not a replacement for specialist models.</p>
-</div>
-<div class="section level2">
-<h2 id="custom-resources">Custom resources<a class="anchor" aria-label="anchor" href="#custom-resources"></a>
-</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
+<span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/scdown_example.html">scdown_example</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"IL7R"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  marker_panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_t_panel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>, <span class="st">"TRAC"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  lineage_mapping <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cd4"</span>, <span class="st">"cd8"</span>, <span class="st">"nk"</span>, <span class="st">"b"</span>, <span class="st">"mono"</span>, <span class="st">"macro"</span><span class="op">)</span>,</span>
-<span>    lineage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T/NK"</span>, <span class="st">"T/NK"</span>, <span class="st">"T/NK"</span>, <span class="st">"B/Plasma"</span>, <span class="st">"Myeloid"</span>, <span class="st">"Myeloid"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  lr_pairs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    ligand <span class="op">=</span> <span class="st">"CCL5"</span>,</span>
-<span>    receptor <span class="op">=</span> <span class="st">"CCR5"</span>,</span>
-<span>    pathway <span class="op">=</span> <span class="st">"chemokine"</span></span>
-<span>  <span class="op">)</span></span>
+<span>  annotation_col <span class="op">=</span> <span class="st">"annotation"</span>,</span>
+<span>  sample_col <span class="op">=</span> <span class="st">"sample"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj_custom</span>, signatures <span class="op">=</span> <span class="st">"my_state"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/check_annotation.html">check_annotation</a></span><span class="op">(</span><span class="va">obj_custom</span>, panels <span class="op">=</span> <span class="st">"my_t_panel"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="direct-input">Direct input<a class="anchor" aria-label="anchor" href="#direct-input"></a>
-</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
-<span>  <span class="va">sce</span>,</span>
-<span>  annotation_col <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
-<span>  sample_col <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  reduced_dim <span class="op">=</span> <span class="st">"UMAP"</span>,</span>
-<span>  assay_name <span class="op">=</span> <span class="st">"counts"</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/find_markers.html">find_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/check_annotation.html">check_annotation</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/plot_average_expression.html">plot_average_expression</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/plot_cluster_similarity.html">plot_cluster_similarity</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/infer_communication.html">infer_communication</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">obj_seurat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
-<span>  <span class="va">seu</span>,</span>
-<span>  annotation_col <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
-<span>  sample_col <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  reduced_dim <span class="op">=</span> <span class="st">"umap"</span>,</span>
-<span>  assay_name <span class="op">=</span> <span class="st">"RNA"</span>,</span>
-<span>  expression_layer <span class="op">=</span> <span class="st">"counts"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
 </h2>
 <ul>
 <li><code><a href="reference/scdown.html">scdown()</a></code></li>
-<li><code><a href="reference/recommended_pipeline.html">recommended_pipeline()</a></code></li>
-<li><code><a href="reference/scope_table.html">scope_table()</a></code></li>
-<li><code><a href="reference/export_for_handoff.html">export_for_handoff()</a></code></li>
 <li><code><a href="reference/summarize_dataset.html">summarize_dataset()</a></code></li>
-<li><code><a href="reference/collapse_lineage.html">collapse_lineage()</a></code></li>
 <li><code><a href="reference/plot_map.html">plot_map()</a></code></li>
-<li><code><a href="reference/explore_markers.html">explore_markers()</a></code></li>
 <li><code><a href="reference/find_markers.html">find_markers()</a></code></li>
-<li><code><a href="reference/plot_gene.html">plot_gene()</a></code></li>
-<li><code><a href="reference/plot_composition.html">plot_composition()</a></code></li>
-<li><code><a href="reference/explore_composition.html">explore_composition()</a></code></li>
 <li><code><a href="reference/check_annotation.html">check_annotation()</a></code></li>
+<li><code><a href="reference/plot_average_expression.html">plot_average_expression()</a></code></li>
+<li><code><a href="reference/plot_cluster_similarity.html">plot_cluster_similarity()</a></code></li>
 <li><code><a href="reference/plot_signature.html">plot_signature()</a></code></li>
-<li><code><a href="reference/explore_signature.html">explore_signature()</a></code></li>
-<li><code><a href="reference/plot_heatmap.html">plot_heatmap()</a></code></li>
 <li><code><a href="reference/infer_communication.html">infer_communication()</a></code></li>
-<li><code><a href="reference/explore_communication.html">explore_communication()</a></code></li>
-<li><code><a href="reference/test_markers.html">test_markers()</a></code></li>
-<li><code><a href="reference/test_composition.html">test_composition()</a></code></li>
-<li><code><a href="reference/test_signature.html">test_signature()</a></code></li>
-<li><code><a href="reference/test_communication.html">test_communication()</a></code></li>
 <li><code><a href="reference/run_core.html">run_core()</a></code></li>
 <li><code><a href="reference/build_scdown_report.html">build_scdown_report()</a></code></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="built-in-resources">Built-in resources<a class="anchor" aria-label="anchor" href="#built-in-resources"></a>
+</h2>
+<ul>
+<li><code><a href="reference/immune_signatures.html">immune_signatures()</a></code></li>
+<li><code><a href="reference/immune_marker_panels.html">immune_marker_panels()</a></code></li>
+<li><code><a href="reference/list_signatures.html">list_signatures()</a></code></li>
+<li><code><a href="reference/get_signature.html">get_signature()</a></code></li>
 </ul>
 </div>
 </div>

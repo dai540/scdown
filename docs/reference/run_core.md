@@ -1,15 +1,16 @@
-# Run the core downstream workflow
+# Run the minimal downstream workflow
 
-Run the core downstream workflow
+Run the minimal downstream workflow
 
 ## Usage
 
 ``` r
 run_core(
   obj,
-  genes = c("CD3D", "NKG7", "LYZ", "MS4A1"),
-  signatures = c("cytotoxic", "exhaustion", "antigen_presentation"),
+  signatures = c("cytotoxic", "antigen_presentation"),
+  panels = c("t_cell", "nk", "b_cell", "monocyte", "macrophage", "dendritic"),
   signature_sets = NULL,
+  marker_panels = NULL,
   outdir = NULL
 )
 ```
@@ -20,17 +21,21 @@ run_core(
 
   A `scdown_obj`.
 
-- genes:
-
-  User-selected genes.
-
 - signatures:
 
-  Signatures to score.
+  Character vector of signatures to score.
+
+- panels:
+
+  Character vector of marker panels to use for annotation checks.
 
 - signature_sets:
 
-  Optional custom signatures.
+  Optional named list of custom signatures.
+
+- marker_panels:
+
+  Optional named list of custom marker panels.
 
 - outdir:
 
@@ -38,4 +43,4 @@ run_core(
 
 ## Value
 
-A named list of results.
+A named list of downstream results.

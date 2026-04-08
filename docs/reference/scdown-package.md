@@ -1,12 +1,29 @@
-# scdown: Simple Downstream Analysis After Cell Annotation
+# scdown: Minimal downstream analysis after cell annotation
 
 `scdown` is a compact downstream toolkit for annotated single-cell
-RNA-seq data. It standardizes a few common input types, keeps the
-internal representation sparse-first, separates lightweight exploration
-from sample-aware testing, and acts as a downstream hub after
-annotation: maps, markers, genes of interest, composition, annotation
-checks, signatures, communication, compact reports, scope tables,
-handoff exports, and guidance on when to hand off to specialist tools.
+RNA-seq data when the goal is to understand structure within one
+dataset. It keeps the workflow short and focused on:
+
+## Details
+
+- cluster or annotation maps
+
+- marker discovery
+
+- marker-based annotation checks
+
+- average expression summaries
+
+- cluster similarity
+
+- signature scoring
+
+- exploratory cell-cell communication
+
+- compact HTML reporting
+
+It is intended for annotation-after interpretation, not for group-aware
+differential testing or full upstream preprocessing.
 
 ## See also
 

@@ -10,7 +10,6 @@ infer_communication(
   lr_pairs = NULL,
   min_detected = 0.1,
   min_specificity = 0.15,
-  exclude_pattern = "(?i)unassigned|unknown|doublet",
   outdir = NULL
 )
 ```
@@ -23,7 +22,7 @@ infer_communication(
 
 - lr_pairs:
 
-  Optional data frame with custom ligand-receptor pairs.
+  Optional ligand-receptor table.
 
 - min_detected:
 
@@ -31,11 +30,7 @@ infer_communication(
 
 - min_specificity:
 
-  Minimum positive enrichment over the rest.
-
-- exclude_pattern:
-
-  Pattern for labels to exclude from communication.
+  Minimum specificity score.
 
 - outdir:
 
@@ -43,4 +38,4 @@ infer_communication(
 
 ## Value
 
-A list with communication tables and plots.
+A list with communication tables and plot paths.

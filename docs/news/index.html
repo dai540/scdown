@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,6 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/recommended-pipeline.html">Recommended Pipeline</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -38,6 +37,13 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.0" id="scdown-050">scdown 0.5.0<a class="anchor" aria-label="anchor" href="#scdown-050"></a></h2>
+<ul><li>simplified the package to annotation-after, within-dataset downstream analysis</li>
+<li>removed group-aware tests, handoff helpers, composition summaries, and pipeline guidance</li>
+<li>focused the API on maps, markers, marker-panel annotation checks, average expression, cluster similarity, signature scoring, exploratory communication, and compact reporting</li>
+<li>cleaned the documentation, vignette, tests, and generated site around the smaller scope</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.2" id="scdown-042">scdown 0.4.2<a class="anchor" aria-label="anchor" href="#scdown-042"></a></h2>
 <ul><li>fixed the GitHub release workflow by installing vignette-building dependencies before <code>R CMD build</code>
 </li>
@@ -53,8 +59,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="scdown-040">scdown 0.4.0<a class="anchor" aria-label="anchor" href="#scdown-040"></a></h2>
-<ul><li>added <code><a href="../reference/scope_table.html">scope_table()</a></code> to make the intended boundary of <code>scdown</code> explicit</li>
-<li>added <code><a href="../reference/export_for_handoff.html">export_for_handoff()</a></code> to prepare objects for <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, and CellChat workflows</li>
+<ul><li>added <code>scope_table()</code> to make the intended boundary of <code>scdown</code> explicit</li>
+<li>added <code>export_for_handoff()</code> to prepare objects for <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, and CellChat workflows</li>
 <li>expanded <code><a href="../reference/build_scdown_report.html">build_scdown_report()</a></code> with scope guidance plus marker and communication test sections</li>
 <li>strengthened README, pkgdown, and the recommended pipeline vignette around exploratory-vs-specialist handoff</li>
 </ul></div>

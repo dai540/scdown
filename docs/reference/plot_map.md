@@ -1,6 +1,6 @@
-# Plot cell map
+# Plot cluster or annotation maps
 
-Plot cell map
+Plot cluster or annotation maps
 
 ## Usage
 

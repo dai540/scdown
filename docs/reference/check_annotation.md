@@ -1,6 +1,6 @@
-# Check annotation with marker panels
+# Check annotation with known marker panels
 
-Check annotation with marker panels
+Check annotation with known marker panels
 
 ## Usage
 
@@ -16,11 +16,12 @@ check_annotation(obj, panels = NULL, marker_panels = NULL, outdir = NULL)
 
 - panels:
 
-  Character vector of panel names or a named list of custom panels.
+  Character vector of built-in panel names or a named list of custom
+  panels.
 
 - marker_panels:
 
-  Optional named list of custom marker panels to merge with built-ins.
+  Optional named list of custom panels.
 
 - outdir:
 
@@ -28,4 +29,4 @@ check_annotation(obj, panels = NULL, marker_panels = NULL, outdir = NULL)
 
 ## Value
 
-A list with annotation-check tables and plots.
+A list with annotation-check tables and plot paths.

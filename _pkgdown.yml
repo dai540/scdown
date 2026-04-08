@@ -6,7 +6,7 @@ template:
 
 home:
   title: scdown
-  description: Annotation-after downstream analysis for single-cell RNA-seq.
+  description: Minimal downstream analysis after cell annotation for single-cell RNA-seq.
 
 navbar:
   structure:
@@ -24,48 +24,30 @@ navbar:
       menu:
         - text: Getting Started
           href: articles/getting-started.html
-        - text: Recommended Pipeline
-          href: articles/recommended-pipeline.html
     news:
       text: News
       href: news/index.html
 
 reference:
-  - title: Object
+  - title: Object and workflow
     contents:
       - scdown
-      - recommended_pipeline
-      - scope_table
-      - export_for_handoff
       - scdown_example
       - summarize_dataset
-      - collapse_lineage
-      - build_scdown_report
       - run_core
-  - title: Explore
+      - build_scdown_report
+  - title: Downstream analysis
     contents:
       - plot_map
-      - explore_markers
       - find_markers
-      - plot_gene
-      - plot_composition
-      - explore_composition
       - check_annotation
+      - plot_average_expression
+      - plot_cluster_similarity
       - plot_signature
-      - explore_signature
-      - plot_heatmap
       - infer_communication
-      - explore_communication
-  - title: Test
-    contents:
-      - test_markers
-      - test_composition
-      - test_signature
-      - test_communication
-  - title: Resources
+  - title: Built-in resources
     contents:
       - immune_signatures
       - immune_marker_panels
-      - default_lineage_mapping
       - list_signatures
       - get_signature
