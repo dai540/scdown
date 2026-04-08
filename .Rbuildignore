@@ -1,6 +1,4 @@
 ^docs$
-^tools$
 ^\.github$
-^\.github/
 ^_pkgdown\.yml$
 ^CITATION\.cff$

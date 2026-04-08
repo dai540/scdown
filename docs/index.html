@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,15 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/getting-started.html">Getting Started</a></li>
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Core</h6></li>
+    <li><a class="dropdown-item" href="articles/getting-started.html">Getting Started</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="news/index.html">News</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/dai540/scdown" aria-label="GitHub repository"><span class="fa fa-github"></span></a></li>
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
@@ -55,56 +58,37 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="scdown">scdown<a class="anchor" aria-label="anchor" href="#scdown"></a>
 </h1></div>
-<p><a href="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://github.com/dai540/scdown/releases" class="external-link"><img src="https://img.shields.io/github/v/release/dai540/scdown?display_name=tag" alt="Latest release"></a> <a href="https://github.com/dai540/scdown/blob/main/LICENSE.txt" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
-<p><code>scdown</code> is a minimal downstream toolkit for annotated single-cell RNA-seq.</p>
-<p>It is built for the common case where you already have clusters or cell-type labels and want to understand structure within one dataset without introducing group- or replicate-aware inference.</p>
-<div class="section level2">
-<h2 id="what-scdown-does">What <code>scdown</code> does<a class="anchor" aria-label="anchor" href="#what-scdown-does"></a>
-</h2>
+<p><a href="https://dai540.github.io/scdown/"><img src="https://img.shields.io/badge/docs-pkgdown-315c86" alt="pkgdown"></a> <a href="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dai540/scdown/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/dai540/scdown/releases" class="external-link"><img src="https://img.shields.io/github/v/release/dai540/scdown" alt="GitHub release"></a> <a href="https://github.com/dai540/scdown/blob/main/LICENSE.txt" class="external-link"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a></p>
+<p><code>scdown</code> is a minimal downstream package for annotated single-cell RNA-seq.</p>
+<p>It assumes that QC, normalization, clustering, and annotation are already done. The package is intentionally narrow and focuses on five practical jobs inside one dataset:</p>
 <ul>
-<li>show cluster or annotation maps</li>
-<li>extract marker genes</li>
-<li>check annotations with known marker panels</li>
-<li>summarize average expression by cluster</li>
-<li>inspect cluster similarity</li>
-<li>score signatures or pathways</li>
-<li>rank exploratory ligand-receptor interactions</li>
-<li>build a compact HTML report</li>
+<li>cluster and annotation maps</li>
+<li>marker discovery</li>
+<li>annotation checks with known marker panels</li>
+<li>cluster-level expression and signature summaries</li>
+<li>exploratory ligand-receptor interaction ranking</li>
 </ul>
-</div>
-<div class="section level2">
-<h2 id="what-scdown-does-not-do">What <code>scdown</code> does not do<a class="anchor" aria-label="anchor" href="#what-scdown-does-not-do"></a>
-</h2>
-<ul>
-<li>QC, ambient RNA correction, doublet detection, normalization, clustering, or integration</li>
-<li>group-aware differential abundance or differential expression</li>
-<li>formal communication modeling for publication-grade claims</li>
-</ul>
-<p>Use Seurat, <code>scater</code>, <code>scuttle</code>, <code>scran</code>, <code>SingleR</code>, <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, or CellChat for those stages.</p>
-</div>
-<div class="section level2">
-<h2 id="website">Website<a class="anchor" aria-label="anchor" href="#website"></a>
-</h2>
-<ul>
-<li>Home: <a href="https://dai540.github.io/scdown/">https://dai540.github.io/scdown/</a>
-</li>
-<li>Getting started: <a href="https://dai540.github.io/scdown/articles/getting-started.html">https://dai540.github.io/scdown/articles/getting-started.html</a>
-</li>
-<li>Reference: <a href="https://dai540.github.io/scdown/reference/index.html">https://dai540.github.io/scdown/reference/index.html</a>
-</li>
-<li>News: <a href="https://dai540.github.io/scdown/news/index.html">https://dai540.github.io/scdown/news/index.html</a>
-</li>
-</ul>
-</div>
+<p>Website: <a href="https://dai540.github.io/scdown/" class="uri">https://dai540.github.io/scdown/</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<p>Install from GitHub with <code>pak</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
+<p>or <code>remotes</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dai540/scdown"</span><span class="op">)</span></span></code></pre></div>
+<p>Or install from a source tarball:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"path/to/scdown_&lt;version&gt;.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<p>Then load the package:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dai540.github.io/scdown/">scdown</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="inputs">Inputs<a class="anchor" aria-label="anchor" href="#inputs"></a>
+<h2 id="input-contract">Input contract<a class="anchor" aria-label="anchor" href="#input-contract"></a>
 </h2>
 <p><code><a href="reference/scdown.html">scdown()</a></code> accepts:</p>
 <ul>
@@ -124,9 +108,9 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="minimal-workflow">Minimal workflow<a class="anchor" aria-label="anchor" href="#minimal-workflow"></a>
+<h2 id="minimal-example">Minimal example<a class="anchor" aria-label="anchor" href="#minimal-example"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dai540.github.io/scdown/">scdown</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdown.html">scdown</a></span><span class="op">(</span></span>
@@ -135,18 +119,15 @@
 <span>  sample_col <span class="op">=</span> <span class="st">"sample"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/find_markers.html">find_markers</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/check_annotation.html">check_annotation</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_average_expression.html">plot_average_expression</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_cluster_similarity.html">plot_cluster_similarity</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/plot_signature.html">plot_signature</a></span><span class="op">(</span><span class="va">obj</span>, signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/infer_communication.html">infer_communication</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_core.html">run_core</a></span><span class="op">(</span></span>
+<span>  <span class="va">obj</span>,</span>
+<span>  signatures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cytotoxic"</span>, <span class="st">"antigen_presentation"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/build_scdown_report.html">build_scdown_report</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
+<h2 id="core-functions">Core functions<a class="anchor" aria-label="anchor" href="#core-functions"></a>
 </h2>
 <ul>
 <li><code><a href="reference/scdown.html">scdown()</a></code></li>
@@ -172,11 +153,73 @@
 <li><code><a href="reference/get_signature.html">get_signature()</a></code></li>
 </ul>
 </div>
+<div class="section level2">
+<h2 id="main-outputs">Main outputs<a class="anchor" aria-label="anchor" href="#main-outputs"></a>
+</h2>
+<p>Typical outputs include:</p>
+<ul>
+<li>cluster map PNGs</li>
+<li>marker tables</li>
+<li>annotation check tables and heatmaps</li>
+<li>average-expression summaries</li>
+<li>cluster-similarity heatmaps</li>
+<li>signature score tables</li>
+<li>communication ranking tables</li>
+<li>one compact HTML report</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="what-scdown-does-not-do">What scdown does not do<a class="anchor" aria-label="anchor" href="#what-scdown-does-not-do"></a>
+</h2>
+<p><code>scdown</code> does not try to replace upstream or specialist tools.</p>
+<ul>
+<li>It does not do QC, ambient RNA correction, doublet detection, normalization, integration, or clustering.</li>
+<li>It does not do group-aware differential abundance or differential expression.</li>
+<li>It does not claim publication-grade communication inference.</li>
+</ul>
+<p>Use Seurat, <code>scater</code>, <code>scuttle</code>, <code>scran</code>, <code>SingleR</code>, <code>muscat</code>, <code>dreamlet</code>, <code>miloR</code>, or CellChat for those stages.</p>
+</div>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<ul>
+<li>Home: <a href="https://dai540.github.io/scdown/" class="uri">https://dai540.github.io/scdown/</a>
+</li>
+<li>Getting Started: <a href="https://dai540.github.io/scdown/articles/getting-started.html" class="uri">https://dai540.github.io/scdown/articles/getting-started.html</a>
+</li>
+<li>Reference: <a href="https://dai540.github.io/scdown/reference/index.html" class="uri">https://dai540.github.io/scdown/reference/index.html</a>
+</li>
+<li>News: <a href="https://dai540.github.io/scdown/news/index.html" class="uri">https://dai540.github.io/scdown/news/index.html</a>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"scdown"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="package-layout">Package layout<a class="anchor" aria-label="anchor" href="#package-layout"></a>
+</h2>
+<ul>
+<li>
+<code>R/object.R</code>: input standardization</li>
+<li>
+<code>R/downstream.R</code>: minimal downstream workflow</li>
+<li>
+<code>R/resources.R</code>: built-in signatures, marker panels, and ligand-receptor pairs</li>
+<li>
+<code>R/report.R</code>: compact HTML reporting</li>
+<li>
+<code>vignettes/</code>: getting-started tutorial</li>
+</ul>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/dai540/scdown/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/dai540/scdown" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/dai540/scdown/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>

@@ -141,7 +141,7 @@ head(res$communication$tables$communication_pair_summary)
 ``` r
 report_path <- build_scdown_report(obj)
 report_path
-#> [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpcvVWS0\\scdown-report-2b943846528f/scdown_report.html"
+#> [1] "C:\\Users\\daiki\\AppData\\Local\\Temp\\RtmpoVBCfw\\scdown-report-3d8c96931c9/scdown_report.html"
 ```
 
 The report writes one HTML file plus CSV and PNG artifacts for each

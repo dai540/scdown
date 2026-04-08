@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +19,13 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Core</h6></li>
+    <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/dai540/scdown" aria-label="GitHub repository"><span class="fa fa-github"></span></a></li>
+<li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
 
@@ -36,7 +39,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="object-and-workflow">Object and workflow<a class="anchor" aria-label="anchor" href="#object-and-workflow"></a></h2>
+      <h2 id="main-workflows">Main workflows<a class="anchor" aria-label="anchor" href="#main-workflows"></a></h2>
 
 
 
@@ -54,42 +57,12 @@
 
         <dt>
 
-          <code><a href="scdown_example.html">scdown_example()</a></code>
-
-        </dt>
-        <dd>Example annotated scRNA-seq dataset</dd>
-
-        <dt>
-
           <code><a href="summarize_dataset.html">summarize_dataset()</a></code>
 
         </dt>
         <dd>Summarize dataset structure</dd>
 
         <dt>
-
-          <code><a href="run_core.html">run_core()</a></code>
-
-        </dt>
-        <dd>Run the minimal downstream workflow</dd>
-
-        <dt>
-
-          <code><a href="build_scdown_report.html">build_scdown_report()</a></code>
-
-        </dt>
-        <dd>Build a compact HTML report</dd>
-      </dl></div><div class="section level2">
-      <h2 id="downstream-analysis">Downstream analysis<a class="anchor" aria-label="anchor" href="#downstream-analysis"></a></h2>
-
-
-
-      <dl></dl></div><div class="section level2">
-
-
-
-
-      <dl><dt>
 
           <code><a href="plot_map.html">plot_map()</a></code>
 
@@ -137,6 +110,36 @@
 
         </dt>
         <dd>Infer exploratory cell-cell communication</dd>
+
+        <dt>
+
+          <code><a href="run_core.html">run_core()</a></code>
+
+        </dt>
+        <dd>Run the minimal downstream workflow</dd>
+
+        <dt>
+
+          <code><a href="build_scdown_report.html">build_scdown_report()</a></code>
+
+        </dt>
+        <dd>Build a compact HTML report</dd>
+      </dl></div><div class="section level2">
+      <h2 id="inputs-and-example-data">Inputs and example data<a class="anchor" aria-label="anchor" href="#inputs-and-example-data"></a></h2>
+
+
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="scdown_example.html">scdown_example()</a></code>
+
+        </dt>
+        <dd>Example annotated scRNA-seq dataset</dd>
       </dl></div><div class="section level2">
       <h2 id="built-in-resources">Built-in resources<a class="anchor" aria-label="anchor" href="#built-in-resources"></a></h2>
 

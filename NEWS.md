@@ -1,3 +1,9 @@
+# scdown 0.5.1
+
+- removed non-package GitHub issue, PR, and release automation files to keep the repository focused on the R package itself
+- simplified `.Rbuildignore` and `.gitignore`
+- rebuilt pkgdown after pruning repository-only files
+
 # scdown 0.5.0
 
 - simplified the package to annotation-after, within-dataset downstream analysis
