@@ -1,17 +1,27 @@
-url: https://dai540.github.io/scdown/
-
 template:
   bootstrap: 5
   bootswatch: flatly
+
+development:
+  mode: release
+
+url: https://dai540.github.io/scdown
 
 home:
   title: scdown
   description: Minimal downstream analysis after cell annotation for single-cell RNA-seq.
 
+repo:
+  url:
+    home: https://github.com/dai540/scdown
+    source: https://github.com/dai540/scdown/blob/main
+    issue: https://github.com/dai540/scdown/issues/
+    user: https://github.com/
+
 navbar:
   structure:
     left: [intro, reference, articles, news]
-    right: [search]
+    right: [github, search]
   components:
     intro:
       text: Get Started
@@ -19,25 +29,22 @@ navbar:
     reference:
       text: Reference
       href: reference/index.html
-    articles:
-      text: Articles
-      menu:
-        - text: Getting Started
-          href: articles/getting-started.html
-    news:
-      text: News
-      href: news/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/dai540/scdown
+      aria-label: GitHub repository
+
+articles:
+  - title: Core tutorials
+    navbar: Core
+    contents:
+      - getting-started
 
 reference:
-  - title: Object and workflow
+  - title: Main workflows
     contents:
       - scdown
-      - scdown_example
       - summarize_dataset
-      - run_core
-      - build_scdown_report
-  - title: Downstream analysis
-    contents:
       - plot_map
       - find_markers
       - check_annotation
@@ -45,6 +52,11 @@ reference:
       - plot_cluster_similarity
       - plot_signature
       - infer_communication
+      - run_core
+      - build_scdown_report
+  - title: Inputs and example data
+    contents:
+      - scdown_example
   - title: Built-in resources
     contents:
       - immune_signatures
